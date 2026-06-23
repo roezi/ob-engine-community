@@ -1,0 +1,42 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Logs
+*.log
+debug.log
+
+# Environment / secrets
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+
+# Dependencies
+node_modules/
+vendor/
+
+# Builds
+dist/
+build/
+
+# WordPress local files
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup*/
+*.sql
+*.sqlite
+*.zip
+
+# Composer
+composer.lock
+
+# NPM
+package-lock.json
