@@ -1,6 +1,6 @@
 # Roadmap
 
-This roadmap keeps OB Engine Community focused on a minimal, safe public foundation before larger automation features.
+This roadmap keeps OB Engine Community focused on a minimal, safe public foundation before larger automation features. The detailed clean-room rebuild order lives in [Rebuild Backlog](REBUILD_BACKLOG.md), and module placement rules live in [Module Boundary](MODULE_BOUNDARY.md).
 
 ## v0.1 — Public blueprint
 
@@ -17,6 +17,7 @@ This roadmap keeps OB Engine Community focused on a minimal, safe public foundat
 - Coding standards for future WordPress work
 - Issue and pull request templates
 - Documentation review checklist
+- Clean-room rebuild backlog and module boundary
 
 ## v0.3 — Core safety design
 
@@ -50,13 +51,13 @@ This roadmap keeps OB Engine Community focused on a minimal, safe public foundat
 - Dry-run-only sample workflow
 - Basic log viewer concept
 
-## v0.7 — Safe content operations preview
+## v0.7 — Basic addon preview plan
 
-- Draft preparation workflow
-- Metadata validation workflow
-- Review queue concept
-- Snapshot storage prototype
-- Rollback contract prototype
+- Import and source preview concepts
+- CSV/XLSX preview concept
+- Auto-content planning preview only
+- Read-only SEO audit and link scanner preview
+- Translation planning and manual/mock translation workflow concepts
 
 ## v0.8 — Hardening and compatibility
 
