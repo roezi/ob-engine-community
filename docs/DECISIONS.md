@@ -37,3 +37,15 @@ This log records product and architecture decisions for OB Engine Community.
 **Decision:** Private prototype code, Destinasindo-specific field maps, production data, and pro-only features are excluded from this repository.
 
 **Reason:** The public repo must remain clean, reusable, secure, and legally distributable.
+
+## 0007 — Clean-room rebuild from sanitized audit findings
+
+**Decision:** OB Engine Community will use sanitized audit findings only as planning input for a clean-room rebuild backlog. Raw audit reports, private prototype source code, private endpoints, credentials, production data, private field maps, private prompts, private workflows, and client-specific business rules are excluded.
+
+**Reason:** The raw prototype is too broad to copy safely into the public community repository. A clean-room backlog preserves useful product lessons while keeping the public project secure, GPL-compatible, reviewable, and free of private implementation details.
+
+## 0008 — Module boundaries separate community, pro, and private work
+
+**Decision:** Community Core owns safe public primitives and contracts; Community Basic Addons may add public-safe preview/read-focused features; Pro Addons own advanced execution and production write paths; Private Adapters own site-specific integrations; unsafe or messy prototype patterns are cut.
+
+**Reason:** Explicit module boundaries prevent feature creep, hidden auto-publish behavior, private data leakage, and accidental inclusion of pro/private functionality in the community repository.
