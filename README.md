@@ -20,25 +20,28 @@ OB Engine aims to make these workflows more structured, predictable, and safe.
 
 ## Current focus
 
-- Safe WordPress automation
-- Draft-first workflows
-- Metadata and custom field mapping
-- SEO content operations
-- Translation workflow support
-- Audit logs and dry-run mode
-- Security-first API handling
-- Maintainer-friendly tooling
+This repository is currently defining the public product blueprint before PHP implementation work begins. The community version focuses on:
+
+- safety-first workflow contracts
+- dry-run-first write operations
+- draft or `needs_review` content defaults
+- explicit approval for publishing and destructive actions
+- BYOK provider settings with masked API keys
+- addon-friendly contracts
+- logs, snapshots, and rollback expectations
+- a strict public/private boundary
 
 ## Safety principles
 
 OB Engine is designed around safety gates:
 
-- dry-run before write actions
-- review before publishing
-- capability checks
-- nonce validation
-- masked secrets
-- audit logs
+- all writes must support dry-run first
+- content writes default to `draft` or `needs_review`
+- no hidden auto-publish
+- destructive actions require explicit user approval
+- capability checks and nonce validation
+- masked BYOK secrets
+- audit logs, snapshots, and rollback contracts
 - predictable workflow execution
 - staging-first mindset
 
@@ -46,13 +49,17 @@ OB Engine is designed around safety gates:
 
 This repository is the community/open-source version of OB Engine. The project is early, active, and under ongoing development.
 
-## Roadmap
+## Product blueprint
 
-See [docs/ROADMAP.md](docs/ROADMAP.md).
-
-## Architecture
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+- [Product brief](docs/PRODUCT_BRIEF.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Safety contract](docs/SAFETY_CONTRACT.md)
+- [Addon contract](docs/ADDON_CONTRACT.md)
+- [Workflow contract](docs/WORKFLOW_CONTRACT.md)
+- [Public/private boundary](docs/PUBLIC_PRIVATE_BOUNDARY.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Release plan](docs/RELEASE_PLAN.md)
+- [Decisions](docs/DECISIONS.md)
 
 ## Contributing
 

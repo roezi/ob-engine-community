@@ -1,33 +1,83 @@
 # Roadmap
 
-## Phase 1: Community foundation
+This roadmap keeps OB Engine Community focused on a minimal, safe public foundation before larger automation features.
 
-- Public repository setup
-- Documentation
-- Security policy
+## v0.1 — Public blueprint
+
+- Product brief and architecture docs
+- Safety, addon, and workflow contracts
+- Public/private boundary
+- Initial release plan and decisions log
+- README alignment with the blueprint
+
+## v0.2 — Repository foundation
+
 - Contribution guide
-- Architecture notes
+- Security policy
+- Coding standards for future WordPress work
+- Issue and pull request templates
+- Documentation review checklist
 
-## Phase 2: Core safety layer
+## v0.3 — Core safety design
 
-- Dry-run workflow
-- Audit logs
-- Capability checks
-- Nonce validation
-- Secret masking
-- Draft-first workflow controls
+- Dry-run data model design
+- Operation classification design
+- Approval gate design
+- Secret masking design
+- Log redaction design
 
-## Phase 3: WordPress automation tools
+## v0.4 — Workflow engine design
 
-- Content audit helpers
-- Metadata mapping
-- SEO field registry
-- Translation string registry
-- Workflow queue
+- Workflow schema draft
+- Tool registry schema draft
+- Guardrail and classification examples
+- Snapshot and rollback examples
+- Minimal fake-data workflow examples
 
-## Phase 4: Maintainer tooling
+## v0.5 — Addon developer preview
 
-- Release workflow
-- Test generation
-- Security audit checklist
-- Documentation improvements
+- Addon metadata contract
+- Tool registration examples
+- Workflow registration examples
+- Compatibility policy
+- Public hooks/interface proposal
+
+## v0.6 — Minimal community implementation
+
+- Plugin skeleton
+- Admin settings shell
+- BYOK settings placeholder with masking
+- Dry-run-only sample workflow
+- Basic log viewer concept
+
+## v0.7 — Safe content operations preview
+
+- Draft preparation workflow
+- Metadata validation workflow
+- Review queue concept
+- Snapshot storage prototype
+- Rollback contract prototype
+
+## v0.8 — Hardening and compatibility
+
+- Capability and nonce coverage
+- Multisite considerations
+- Import/export redaction checks
+- Documentation and developer examples
+- Backward compatibility review
+
+## v0.9 — Release candidate
+
+- Security review
+- Accessibility review for admin UI
+- Addon contract freeze candidate
+- Upgrade and migration notes
+- Public demo data only
+
+## v1.0 — Stable community base
+
+- Stable safety contract
+- Stable addon contract
+- Stable workflow contract
+- Minimal safe automation workflows
+- Release notes and support policy
