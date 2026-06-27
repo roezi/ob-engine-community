@@ -4,6 +4,8 @@ OBE v1.0 must be built in an order that locks architecture before runtime behavi
 
 ## Sequence
 
+The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.11.0`, Manual Generate to Library is complete and the next runtime target is `v0.12.0` Dry-run / Write Draft Safety Runtime.
+
 1. Master Architecture
 2. UI Blueprint
 3. AI / Responses API Contract

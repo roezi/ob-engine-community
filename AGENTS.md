@@ -8,6 +8,25 @@ OB Engine Community is the public, GPL-compatible community base of OBE — Opti
 
 This repository must stay clean, minimal, secure, addon-friendly, and suitable as a public portfolio project. Do not import private prototype code, client-specific logic, production data, or experimental features without an explicit public design review.
 
+
+## Project orientation before coding
+
+Before starting any new task, read:
+
+- `PROJECT.md`
+- `docs/PROJECT_STATUS.md`
+- `docs/VERSIONING.md`
+- `docs/NEXT_MISSIONS.md`
+- relevant architecture docs for the mission scope
+
+Version and mission rules:
+
+- Do not invent next version numbers.
+- Use `docs/VERSIONING.md` as the source of truth for version decisions.
+- Docs-only changes do not bump plugin version.
+- Runtime feature PRs must mention the target version in the PR body.
+- Every mission must say what is out of scope.
+
 ## Current implementation rule
 
 Documentation is the source of truth for the current blueprint. Do not implement PHP features until a task explicitly asks for implementation.
