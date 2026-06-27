@@ -3,7 +3,7 @@
  * Plugin Name: OB Engine Community
  * Plugin URI: https://github.com/roezi/ob-engine-community
  * Description: Safety-first WordPress automation foundation for OB Engine Community.
- * Version: 0.14.0
+ * Version: 0.15.0
  * Author: Optimized Builder
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OB_ENGINE_VERSION', '0.14.0' );
+define( 'OB_ENGINE_VERSION', '0.15.0' );
 define( 'OB_ENGINE_FILE', __FILE__ );
 define( 'OB_ENGINE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'OB_ENGINE_URL', plugin_dir_url( __FILE__ ) );
@@ -77,6 +77,11 @@ require_once OB_ENGINE_PATH . 'includes/Sources/Source_Preview.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Preview_Redactor.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Preview_Parser.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Intake_Service.php';
+require_once OB_ENGINE_PATH . 'includes/Sources/Field_Target.php';
+require_once OB_ENGINE_PATH . 'includes/Sources/Field_Mapping_Item.php';
+require_once OB_ENGINE_PATH . 'includes/Sources/Field_Mapping_Plan.php';
+require_once OB_ENGINE_PATH . 'includes/Sources/Field_Mapping_Validator.php';
+require_once OB_ENGINE_PATH . 'includes/Sources/Field_Mapping_Service.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Dashboard_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Settings_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Manual_Generate_Page.php';

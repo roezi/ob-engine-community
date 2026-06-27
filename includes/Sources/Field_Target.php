@@ -1,0 +1,13 @@
+<?php
+/** Generic field mapping targets. @package OBEngine\Sources */
+namespace OBEngine\Sources;
+defined( 'ABSPATH' ) || exit;
+final class Field_Target {
+	public const TITLE='title'; public const SUMMARY='summary'; public const CONTENT='content'; public const EXCERPT='excerpt'; public const SLUG='slug'; public const CATEGORY='category'; public const TAGS='tags'; public const IMAGE_URL='image_url'; public const SOURCE_URL='source_url'; public const LOCATION='location'; public const PRICE='price'; public const RATING='rating'; public const CUSTOM_FIELD='custom_field'; public const NOTES='notes'; public const IGNORE='ignore';
+	public static function all(): array { return array_keys( self::labels() ); }
+	public static function labels(): array { return array( self::TITLE=>__( 'Title','ob-engine' ), self::SUMMARY=>__( 'Summary','ob-engine' ), self::CONTENT=>__( 'Content','ob-engine' ), self::EXCERPT=>__( 'Excerpt','ob-engine' ), self::SLUG=>__( 'Slug','ob-engine' ), self::CATEGORY=>__( 'Category','ob-engine' ), self::TAGS=>__( 'Tags','ob-engine' ), self::IMAGE_URL=>__( 'Image URL','ob-engine' ), self::SOURCE_URL=>__( 'Source URL','ob-engine' ), self::LOCATION=>__( 'Location','ob-engine' ), self::PRICE=>__( 'Price','ob-engine' ), self::RATING=>__( 'Rating','ob-engine' ), self::CUSTOM_FIELD=>__( 'Custom field','ob-engine' ), self::NOTES=>__( 'Notes','ob-engine' ), self::IGNORE=>__( 'Ignore','ob-engine' ) ); }
+	public static function is_valid( string $target ): bool { return in_array( $target, self::all(), true ); }
+	public static function label( string $target ): string { $labels = self::labels(); return $labels[ $target ] ?? $labels[ self::IGNORE ]; }
+	public static function required_for_basic_post(): array { return array( self::TITLE, self::CONTENT ); }
+	public static function suggested_target_for_source_column( string $column ): string { $key = strtolower( trim( str_replace( array( '-', ' ' ), '_', $column ) ) ); $map = array( self::TITLE=>array('title','name','headline'), self::SUMMARY=>array('description','summary','overview'), self::CONTENT=>array('content','body','article','text'), self::EXCERPT=>array('excerpt','short_description'), self::SLUG=>array('slug','permalink'), self::CATEGORY=>array('category','type','group'), self::TAGS=>array('tags','keywords'), self::IMAGE_URL=>array('image','photo','thumbnail','image_url'), self::SOURCE_URL=>array('url','link','source','canonical','source_url'), self::LOCATION=>array('city','location','address','place'), self::PRICE=>array('price','cost','rate'), self::RATING=>array('rating','stars','score') ); foreach ( $map as $target => $columns ) { if ( in_array( $key, $columns, true ) ) { return $target; } } return self::NOTES; }
+}
