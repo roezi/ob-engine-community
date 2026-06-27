@@ -89,3 +89,44 @@
 .ob-engine-danger-link {
 	color: #b32d2e;
 }
+
+.ob-engine-activity-table {
+	margin-top: 12px;
+}
+
+.ob-engine-filter-tabs {
+	margin: 16px 0 0;
+}
+
+.ob-engine-activity-context {
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	max-height: 420px;
+	overflow: auto;
+	padding: 12px;
+	white-space: pre-wrap;
+}
+
+.ob-engine-status-badge.is-info {
+	background: #e7f5ff;
+	border-color: #72aee6;
+	color: #0a4b78;
+}
+
+.ob-engine-status-badge.is-success {
+	background: #edfaef;
+	border-color: #00a32a;
+	color: #007017;
+}
+
+.ob-engine-status-badge.is-warning {
+	background: #fcf9e8;
+	border-color: #dba617;
+	color: #674e00;
+}
+
+.ob-engine-status-badge.is-failed {
+	background: #fcf0f1;
+	border-color: #d63638;
+	color: #b32d2e;
+}

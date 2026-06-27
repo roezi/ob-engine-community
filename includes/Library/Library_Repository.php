@@ -7,6 +7,8 @@
 
 namespace OBEngine\Library;
 
+use OBEngine\Activity\Activity_Action;
+use OBEngine\Activity\Activity_Logger;
 use OBEngine\Support\Capabilities;
 use WP_Error;
 
@@ -65,6 +67,7 @@ final class Library_Repository {
 			return $id;
 		}
 		$this->save_meta( (int) $id, $data );
+		$this->log_library_event( Activity_Action::LIBRARY_ITEM_CREATED, (int) $id, $data );
 		return (int) $id;
 	}
 
@@ -87,6 +90,7 @@ final class Library_Repository {
 			return $result;
 		}
 		$this->save_meta( $id, $data );
+		$this->log_library_event( Activity_Action::LIBRARY_ITEM_UPDATED, $id, $data );
 		return true;
 	}
 
@@ -132,6 +136,9 @@ final class Library_Repository {
 			return new WP_Error( 'obe_library_invalid_item', __( 'Invalid Library item.', 'ob-engine' ) );
 		}
 		update_post_meta( $id, self::META_STATUS, Library_Status::ARCHIVED );
+		$data = $item->to_array();
+		$data['status'] = Library_Status::ARCHIVED;
+		$this->log_library_event( Activity_Action::LIBRARY_ITEM_ARCHIVED, $id, $data );
 		return true;
 	}
 
@@ -139,8 +146,15 @@ final class Library_Repository {
 		if ( self::POST_TYPE !== get_post_type( $id ) ) {
 			return new WP_Error( 'obe_library_invalid_item', __( 'Invalid Library item.', 'ob-engine' ) );
 		}
+		$item = $this->get( $id );
 		$result = wp_delete_post( $id, true );
-		return $result ? true : new WP_Error( 'obe_library_delete_failed', __( 'Library item could not be deleted.', 'ob-engine' ) );
+		if ( ! $result ) {
+			return new WP_Error( 'obe_library_delete_failed', __( 'Library item could not be deleted.', 'ob-engine' ) );
+		}
+		if ( $item ) {
+			$this->log_library_event( Activity_Action::LIBRARY_ITEM_DELETED, $id, $item->to_array() );
+		}
+		return true;
 	}
 
 	public function sanitize_item_data( array $data ): array {
@@ -156,6 +170,18 @@ final class Library_Repository {
 			'payload_redacted'  => isset( $data['payload_redacted'] ) ? sanitize_textarea_field( (string) $data['payload_redacted'] ) : '',
 			'created_context'   => isset( $data['created_context'] ) ? sanitize_key( (string) $data['created_context'] ) : 'manual_admin',
 		);
+	}
+
+	private function log_library_event( string $action, int $id, array $data ): void {
+		$context = array(
+			'item_id'      => $id,
+			'title'        => isset( $data['title'] ) ? (string) $data['title'] : '',
+			'type'         => isset( $data['type'] ) ? (string) $data['type'] : '',
+			'status'       => isset( $data['status'] ) ? (string) $data['status'] : '',
+			'source_label' => isset( $data['source_label'] ) ? (string) $data['source_label'] : '',
+		);
+
+		( new Activity_Logger() )->library_event( $action, $id, isset( $data['title'] ) ? (string) $data['title'] : '', $context );
 	}
 
 	private function save_meta( int $id, array $data ): void {
