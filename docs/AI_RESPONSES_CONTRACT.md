@@ -11,6 +11,16 @@ This document is the public v0.5 contract for OBE AI execution. It is documentat
 - **Gemini and custom providers must map to the same contracts.** Every provider returns normalized `AI_Response` values from normalized `AI_Request` inputs.
 - **Contract comes before implementation.** Future code must implement these contracts without guessing or bypassing safety boundaries.
 
+## Related contract documents
+
+This overview is supported by focused contracts for normalized request/response shapes, provider behavior, model profiles, task types, structured outputs, usage, errors, and redaction:
+
+- [AI Request / Response Contract](AI_REQUEST_RESPONSE_CONTRACT.md)
+- [Provider Interface Contract](PROVIDER_INTERFACE_CONTRACT.md)
+- [AI Task Types and Model Profiles](AI_TASK_TYPES_AND_MODEL_PROFILES.md)
+- [Structured Output Schemas](STRUCTURED_OUTPUT_SCHEMAS.md)
+- [AI Usage, Error, and Redaction Contract](AI_USAGE_ERROR_AND_REDACTION_CONTRACT.md)
+
 ## Target folder architecture
 
 Future implementation targets are documented here only.
