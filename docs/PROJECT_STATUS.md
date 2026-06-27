@@ -2,10 +2,10 @@
 
 ## Current snapshot
 
-- **Plugin version:** `0.18.0`
-- **Stage:** Editorial Humanizer / Readability addon foundation complete
-- **Mission status:** Editorial Humanizer / Readability is a bundled Community addon/module that can explicitly generate review-first editorial revision candidates from eligible Library drafts and save them back to Library as `needs_review`.
-- **Next runtime target:** `v0.19.0` — Hardening pass 1
+- **Plugin version:** `0.19.0`
+- **Stage:** Pre-publish hardening + workflow visualizer complete
+- **Mission status:** v0.19.0 hardening tightened service-level write gates, added OBE → Workflow visualization metadata, fixed trust copy, and documented manual QC/release gates.
+- **Next runtime target:** `v1.0` — Stable community base after Roezi manual QC
 
 ## Completed milestones
 
@@ -28,6 +28,7 @@
 | `v0.16.1` | Addon Registry + Auto Post bundled addon boundary | Complete |
 | `v0.17.0` | Auto Post Draft Generator | Complete |
 | `v0.18.0` | Editorial Humanizer / Readability Addon Foundation | Complete |
+| `v0.19.0` | Hardening + QC + Workflow Visualizer | Complete |
 
 ## Current capabilities
 
@@ -43,6 +44,8 @@
 - Auto Post draft candidates can be generated explicitly from Auto Post Plans and saved as Library `content_draft` items with `needs_review` status.
 - Editorial revision candidates can be generated explicitly from eligible Library drafts and saved as private Library `editorial_revision` items with `needs_review` status.
 - OBE → Addons lists bundled Community addon metadata and marks Auto Post / Import as enabled/community.
+- OBE → Workflow shows static review-first workflow metadata without running agents, calling AI, executing tools, or writing posts.
+- Dry-run and Write Draft service gates require private Library items, approved Library status, approved approval records, writeable Library types, and a passed dry-run before write.
 - Library items can be reviewed and approved/rejected.
 - Activity Log records redacted events.
 

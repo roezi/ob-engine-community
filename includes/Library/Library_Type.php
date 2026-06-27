@@ -51,6 +51,14 @@ final class Library_Type {
 		return in_array( $type, self::all(), true );
 	}
 
+	public static function writeable_types(): array {
+		return array( self::CONTENT_DRAFT, self::EDITORIAL_REVISION );
+	}
+
+	public static function is_writeable( string $type ): bool {
+		return in_array( $type, self::writeable_types(), true );
+	}
+
 	public static function label( string $type ): string {
 		$labels = self::labels();
 		return $labels[ $type ] ?? $type;
