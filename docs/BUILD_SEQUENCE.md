@@ -4,7 +4,7 @@ OBE v1.0 must be built in an order that locks architecture before runtime behavi
 
 ## Sequence
 
-The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.16.0`, Auto Post Plan Generator is complete and the next runtime target is `v0.17.0` Auto Post Draft Generator.
+The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.16.1`, the Addon Registry foundation is complete, Auto Post / Import is a bundled Community addon, and the next runtime target is `v0.17.0` Auto Post Draft Generator inside that addon boundary.
 
 1. Master Architecture
 2. UI Blueprint
@@ -18,7 +18,7 @@ The historical blueprint sequence remains below, but current mission tracking no
 10. Auto Post Planner
 11. AI Draft Generator
 12. Draft Writer
-13. Addon modules
+13. Addon registry and module boundary
 14. Workflow Pro / Agents SDK
 15. Final hardening
 
@@ -72,7 +72,7 @@ Generate `content_draft` Library items using the AI Engine and selected provider
 
 Write only approved Library `content_draft` items to `draft` or `needs_review`. Publish only after separate explicit approval.
 
-### 13. Addon modules
+### 13. Addon registry and module boundary
 
 Add SEO Audit & Fix, Performance Audit, Auto Content / Auto Post, Translation, and Workflow Pro cards under OBE → Addons. Addons must not create separate top-level menus.
 
@@ -87,3 +87,8 @@ Perform full security and reliability hardening: capability audit, nonce audit, 
 ## Minimum safety from the start
 
 Final hardening happens late, but every implementation stage must include capability checks, nonce checks for writes, sanitization, escaping, masked keys, no raw secret display, no direct publish, and no destructive default.
+
+
+## Current addon boundary
+
+OBE Core owns the admin shell, provider settings, AI engine contracts/orchestration, Library, Activity, Approval, Safety, Writing, and Addon registry/contracts. Bundled Community addons own feature workflows such as Auto Post / Import, SEO Review, Performance Review, and Translation Plan. Future Pro/private addons, private adapters, private prompts, private field maps, partner API connectors, and production/client-specific workflows are not included in the public runtime.

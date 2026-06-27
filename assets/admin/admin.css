@@ -130,3 +130,36 @@
 	border-color: #d63638;
 	color: #b32d2e;
 }
+
+.ob-engine-addon-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 16px;
+	margin: 16px 0 24px;
+}
+.ob-engine-addon-card h3 {
+	margin-top: 0;
+}
+.ob-engine-addon-badge {
+	border: 1px solid #dcdcde;
+	border-radius: 999px;
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 16px;
+	padding: 3px 8px;
+}
+.ob-engine-addon-badge.is-enabled,
+.ob-engine-addon-badge.is-community {
+	color: #00a32a;
+}
+.ob-engine-addon-badge.is-coming-soon,
+.ob-engine-addon-badge.is-needs-setup,
+.ob-engine-addon-badge.is-basic {
+	color: #dba617;
+}
+.ob-engine-addon-badge.is-pro,
+.ob-engine-addon-badge.is-private-adapter,
+.ob-engine-addon-badge.is-disabled {
+	color: #646970;
+}

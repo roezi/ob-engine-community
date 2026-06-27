@@ -20,7 +20,7 @@ final class Auto_Post_Import_Page {
 		<div class="wrap ob-engine-wrap ob-engine-page-form">
 			<?php View::heading( __( 'Auto Post / Import', 'ob-engine' ) ); ?>
 			<?php $this->render_notices( $result ); $this->render_mapping_notice( $mapping_result ); $this->render_plan_notice( $plan_result ); ?>
-			<div class="notice notice-info inline"><p><?php esc_html_e( 'Preview source data before mapping, generation, approval, or WordPress writes.', 'ob-engine' ); ?></p></div>
+			<div class="notice notice-info inline"><p><?php esc_html_e( 'Bundled Community Addon: Auto Post / Import. Preview source data before mapping, generation, approval, or WordPress writes.', 'ob-engine' ); ?></p></div>
 			<div class="notice notice-warning inline"><p><?php esc_html_e( 'This page does not call AI providers, import content, write posts, or publish. It stores a redacted preview in Library.', 'ob-engine' ); ?></p></div>
 			<form method="post" action="" class="ob-engine-card">
 				<?php wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME ); ?><input type="hidden" name="obe_source_preview_action" value="preview" />

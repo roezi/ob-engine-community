@@ -3,7 +3,7 @@
  * Plugin Name: OB Engine Community
  * Plugin URI: https://github.com/roezi/ob-engine-community
  * Description: Safety-first WordPress automation foundation for OB Engine Community.
- * Version: 0.16.0
+ * Version: 0.16.1
  * Author: Optimized Builder
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OB_ENGINE_VERSION', '0.16.0' );
+define( 'OB_ENGINE_VERSION', '0.16.1' );
 define( 'OB_ENGINE_FILE', __FILE__ );
 define( 'OB_ENGINE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'OB_ENGINE_URL', plugin_dir_url( __FILE__ ) );
@@ -72,6 +72,12 @@ require_once OB_ENGINE_PATH . 'includes/Writing/Write_Repository.php';
 require_once OB_ENGINE_PATH . 'includes/Writing/WordPress_Draft_Writer.php';
 require_once OB_ENGINE_PATH . 'includes/Writing/Write_Draft_Service.php';
 require_once OB_ENGINE_PATH . 'includes/Library/Library_Admin_Page.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Status.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Scope.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Definition.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/AutoPost/Auto_Post_Addon.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Registry.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Admin_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Type.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Preview.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Preview_Redactor.php';

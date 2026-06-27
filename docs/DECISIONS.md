@@ -101,3 +101,9 @@ This log records product and architecture decisions for OB Engine Community.
 OBE uses one top-level WordPress admin menu named **OBE** with Dashboard, Library, Auto Post / Import, Workflow, Addons, Activity, and Settings. Addons are integrated modules inside OBE and must not create separate top-level WordPress admin menus. The UI follows WordPress-native admin patterns and the public design system. Auto Post / Import remains review-first and writes only approved `draft` or `needs_review` content.
 
 References: [Admin UI Blueprint](ADMIN_UI_BLUEPRINT.md), [UI Design System](UI_DESIGN_SYSTEM.md), [Addons Integration Blueprint](ADDONS_INTEGRATION_BLUEPRINT.md), and [Auto Post Workflow Blueprint](AUTO_POST_WORKFLOW_BLUEPRINT.md).
+
+## 0016 — Addon registry separates Core from bundled workflows
+
+**Decision:** OBE Core owns shared contracts and safety primitives, while Auto Post / Import is a bundled Community addon/module registered inside the OBE admin experience.
+
+**Reason:** The Community plugin must not become a monolithic all-features runtime. Future SEO Review, Performance Review, and Translation Plan workflows can use the same public addon metadata boundary, while Workflow Pro and private adapters remain outside Community runtime.

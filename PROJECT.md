@@ -6,14 +6,14 @@
 
 ## Current status
 
-- **Current plugin version:** `0.16.0`
-- **Current stage:** Auto Post Plan Generator complete
-- **Current mission status:** Auto Post Plans can be explicitly generated from Field Mapping Library items and saved to private Library as `needs_review`.
+- **Current plugin version:** `0.16.1`
+- **Current stage:** Addon Registry foundation complete
+- **Current mission status:** Auto Post / Import is identified as a bundled Community addon with registry metadata; existing plans remain review-first Library items.
 - **Next runtime target:** `v0.17.0` — Auto Post Draft Generator
 
 ## MVP target summary
 
-Provider settings → AI Engine → Manual Generate → Library → Approval → Dry-run → Write Draft
+Provider settings → AI Engine → Library → Approval → Dry-run → Write Draft, with feature workflows owned by bundled Community addons
 
 ## Mission rule
 
