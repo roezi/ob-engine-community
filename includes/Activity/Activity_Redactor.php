@@ -1,0 +1,12 @@
+<?php
+/** Redacts Activity context before storage. @package OBEngine\Activity */
+namespace OBEngine\Activity;
+defined( 'ABSPATH' ) || exit;
+final class Activity_Redactor {
+	private const SECRET='[REDACTED_SECRET]'; private const TOKEN='[REDACTED_TOKEN]'; private const ENDPOINT='[REDACTED_ENDPOINT]'; private const PROMPT='[REDACTED_PRIVATE_PROMPT]'; private const FIELD_MAP='[REDACTED_PRIVATE_FIELD_MAP]'; private const PAYLOAD='[REDACTED_PRIVATE_PAYLOAD]';
+	public function redact_string( string $value ): string { $value=$this->truncate_string($value); $value=preg_replace('/Authorization\s*:\s*Bearer\s+[^\s,;]+/i','Authorization: '.self::TOKEN,$value); $value=preg_replace('/Bearer\s+[A-Za-z0-9_\.\-]{12,}/i','Bearer '.self::TOKEN,$value); $value=preg_replace('/sk-[A-Za-z0-9_\-]{16,}/i',self::TOKEN,$value); $value=preg_replace('/(password\s*[=:]\s*)[^\s,;&]+/i','$1'.self::SECRET,$value); $value=preg_replace('/\b[A-Za-z0-9_\-]{40,}\b/',self::TOKEN,$value); $value=preg_replace('/https?:\/\/[^\s]+/i',self::ENDPOINT,$value); return is_string($value)?$value:''; }
+	public function redact_array( array $context ): array { $redacted=array(); foreach ( $context as $key=>$value ) { $key_string=strtolower((string)$key); if ( false!==strpos($key_string,'private_prompt') ) { $redacted[$key]=self::PROMPT; continue; } if ( false!==strpos($key_string,'private_field_map') ) { $redacted[$key]=self::FIELD_MAP; continue; } if ( false!==strpos($key_string,'endpoint') ) { $redacted[$key]=self::ENDPOINT; continue; } if ( preg_match('/api_key|key|secret|token|bearer|authorization|cookie|password|credential|oauth/', $key_string) ) { $redacted[$key]=self::SECRET; continue; } $redacted[$key]=$this->redact_value($value); } return $redacted; }
+	public function redact_value( $value ) { if ( is_array($value) ) { return $this->redact_array($value); } if ( is_object($value) ) { return self::PAYLOAD; } if ( is_string($value) ) { return $this->redact_string($value); } if ( is_scalar($value) || null === $value ) { return $value; } return self::PAYLOAD; }
+	public function to_json( array $context ): string { $json = wp_json_encode( $this->redact_array( $context ) ); return is_string( $json ) ? $json : '{}'; }
+	public function truncate_string( string $value, int $max_length = 2000 ): string { $length=function_exists('mb_strlen')?mb_strlen($value):strlen($value); if ( $length <= $max_length ) { return $value; } $slice=function_exists('mb_substr')?mb_substr($value,0,$max_length):substr($value,0,$max_length); return $slice . ' [REDACTED_TRUNCATED]'; }
+}

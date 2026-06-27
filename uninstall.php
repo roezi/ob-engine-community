@@ -3,8 +3,8 @@
  * OB Engine Community uninstall cleanup.
  *
  * This plugin may store admin/provider settings and private OBE Library items.
- * It does not create custom tables, production content, workflows, queues,
- * cron jobs, routes, or logs.
+ * It stores private OBE Library items and may create a private Activity Log table.
+ * It does not create production content, workflows, queues, cron jobs, or routes.
  *
  * @package OBEngine
  */
@@ -12,7 +12,7 @@
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 // Delete only the admin/provider settings options created by this plugin.
-// Do not delete production content, tables, or external data here.
+// Do not delete production content or external data here.
 delete_option( 'ob_engine_settings' );
 delete_option( 'ob_engine_provider_settings' );
 
@@ -31,3 +31,8 @@ $obe_library_items = get_posts(
 foreach ( $obe_library_items as $obe_library_item_id ) {
 	wp_delete_post( (int) $obe_library_item_id, true );
 }
+
+// Remove only the private OBE Activity Log table created by this plugin.
+// This does not delete public posts, unrelated options, or external data.
+global $wpdb;
+$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'obe_activity_log' );

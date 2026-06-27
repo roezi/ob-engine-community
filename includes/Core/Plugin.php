@@ -7,6 +7,7 @@
 
 namespace OBEngine\Core;
 
+use OBEngine\Activity\Activity_Repository;
 use OBEngine\Admin\Admin_Menu;
 use OBEngine\Library\Library_Repository;
 
@@ -41,6 +42,7 @@ final class Plugin {
 		add_action( 'init', array( new Library_Repository(), 'register_post_type' ) );
 
 		if ( is_admin() ) {
+			add_action( 'admin_init', array( new Activity_Repository(), 'maybe_create_table' ) );
 			( new Admin_Menu() )->register();
 		}
 	}
