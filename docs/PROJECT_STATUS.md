@@ -2,10 +2,10 @@
 
 ## Current snapshot
 
-- **Plugin version:** `0.11.0`
-- **Stage:** Manual Generate to Library complete
-- **Mission status:** AI output can be generated manually and saved to the private Library as `needs_review`.
-- **Next runtime target:** `v0.12.0` — Dry-run / Write Draft Safety Runtime
+- **Plugin version:** `0.16.0`
+- **Stage:** Auto Post Plan Generator complete
+- **Mission status:** Auto Post Plans can be explicitly generated from Field Mapping Library items and saved to the private Library as `needs_review`.
+- **Next runtime target:** `v0.17.0` — Auto Post Draft Generator
 
 ## Completed milestones
 
@@ -20,6 +20,11 @@
 | `v0.9.0` | Approval Gate Foundation | Complete |
 | `v0.10.0` | AI Engine Orchestrator | Complete |
 | `v0.11.0` | Manual Generate to Library | Complete |
+| `v0.12.0` | Dry-run / Write Draft Safety Runtime | Complete |
+| `v0.13.0` | Write Draft from Approved Library Item | Complete |
+| `v0.14.0` | Source Intake Preview | Complete |
+| `v0.15.0` | Field Mapping + Validation | Complete |
+| `v0.16.0` | Auto Post Plan Generator | Complete |
 
 ## Current capabilities
 
@@ -29,16 +34,17 @@
 - AI Engine orchestrator exists.
 - Manual Generate page exists.
 - Generated output can be saved to private Library.
+- Source previews can be created from generic pasted input.
+- Field mappings can be validated and saved.
+- Auto Post Plans can be generated explicitly from Field Mapping items and saved as `needs_review`.
 - Library items can be reviewed and approved/rejected.
 - Activity Log records redacted events.
 
 ## Intentionally not implemented yet
 
-- Write Draft runtime.
-- Auto Post source intake.
-- Field mapping.
-- Source validation.
-- Approval-to-write handoff.
+- Auto Post draft generation.
+- Bulk Auto Post generation.
+- Auto Post plan approval-to-draft handoff.
 - Gemini/Anthropic/OpenRouter runtime providers.
 - Bricks/SEO/Performance addons.
 - REST/MCP/WP-CLI/cron/workers.
@@ -47,7 +53,7 @@
 ## Current safety guarantees
 
 - Generated AI output is routed to private Library before any WordPress write path.
-- Review states use `needs_review`, approval, and rejection concepts before write runtime exists.
+- Review states use `needs_review`, approval, and rejection concepts before write runtime executes.
 - Provider settings follow BYOK storage and masking expectations.
 - Activity events are redacted and must not expose raw keys, tokens, private prompts, private endpoints, or large private payloads.
 - No hidden auto-publish or publish runtime is part of the current community base.

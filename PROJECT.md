@@ -6,10 +6,10 @@
 
 ## Current status
 
-- **Current plugin version:** `0.11.0`
-- **Current stage:** Manual Generate to Library complete
-- **Current mission status:** AI output can be generated manually and saved to private Library as `needs_review`.
-- **Next runtime target:** `v0.12.0` — Dry-run / Write Draft Safety Runtime
+- **Current plugin version:** `0.16.0`
+- **Current stage:** Auto Post Plan Generator complete
+- **Current mission status:** Auto Post Plans can be explicitly generated from Field Mapping Library items and saved to private Library as `needs_review`.
+- **Next runtime target:** `v0.17.0` — Auto Post Draft Generator
 
 ## MVP target summary
 

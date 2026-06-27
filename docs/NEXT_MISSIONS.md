@@ -2,6 +2,10 @@
 
 This queue is ordered. Each mission should be delivered as one PR with explicit out-of-scope notes and safety requirements.
 
+## Current next mission
+
+After `v0.16.0`, the next runtime target is `v0.17.0` — Auto Post Draft Generator. Auto Post Plans are generated into Library only and remain review-first.
+
 ## 1. `v0.12.0` — Dry-run / Write Draft Safety Runtime
 
 - **Goal:** Add the safety runtime foundation that can model a Write Draft operation as a dry-run before any WordPress write.
