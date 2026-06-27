@@ -21,6 +21,7 @@ final class AI_Task_Type {
 	public const GENERATE_CONTENT_DRAFT = 'generate_content_draft';
 	public const IMPROVE_CONTENT_DRAFT = 'improve_content_draft';
 	public const REVIEW_CONTENT = 'review_content';
+	public const EDITORIAL_REVISION = 'editorial_revision';
 	public const GENERATE_SEO_REVIEW = 'generate_seo_review';
 	public const GENERATE_TRANSLATION_PLAN = 'generate_translation_plan';
 	public const GENERATE_PERFORMANCE_REPORT = 'generate_performance_report';
@@ -38,6 +39,7 @@ final class AI_Task_Type {
 			self::GENERATE_CONTENT_DRAFT,
 			self::IMPROVE_CONTENT_DRAFT,
 			self::REVIEW_CONTENT,
+			self::EDITORIAL_REVISION,
 			self::GENERATE_SEO_REVIEW,
 			self::GENERATE_TRANSLATION_PLAN,
 			self::GENERATE_PERFORMANCE_REPORT,

@@ -19,6 +19,7 @@ final class Library_Type {
 	public const AUTO_POST_PLAN     = 'auto_post_plan';
 	public const CONTENT_DRAFT      = 'content_draft';
 	public const CONTENT_REVIEW     = 'content_review';
+	public const EDITORIAL_REVISION = 'editorial_revision';
 	public const SEO_REVIEW         = 'seo_review';
 	public const TRANSLATION_PLAN   = 'translation_plan';
 	public const PERFORMANCE_REPORT = 'performance_report';
@@ -37,6 +38,7 @@ final class Library_Type {
 			self::AUTO_POST_PLAN     => __( 'Auto Post Plan', 'ob-engine' ),
 			self::CONTENT_DRAFT      => __( 'Content Draft', 'ob-engine' ),
 			self::CONTENT_REVIEW     => __( 'Content Review', 'ob-engine' ),
+			self::EDITORIAL_REVISION => __( 'Editorial Revision', 'ob-engine' ),
 			self::SEO_REVIEW         => __( 'SEO Review', 'ob-engine' ),
 			self::TRANSLATION_PLAN   => __( 'Translation Plan', 'ob-engine' ),
 			self::PERFORMANCE_REPORT => __( 'Performance Report', 'ob-engine' ),

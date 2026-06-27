@@ -40,6 +40,7 @@ final class AI_Task_Profile_Resolver {
 			AI_Task_Type::GENERATE_CONTENT_DRAFT       => Structured_Output::CONTENT_DRAFT_V1,
 			AI_Task_Type::IMPROVE_CONTENT_DRAFT        => Structured_Output::CONTENT_REVIEW_V1,
 			AI_Task_Type::REVIEW_CONTENT               => Structured_Output::CONTENT_REVIEW_V1,
+			AI_Task_Type::EDITORIAL_REVISION           => Structured_Output::EDITORIAL_REVISION_V1,
 			AI_Task_Type::GENERATE_SEO_REVIEW          => Structured_Output::SEO_REVIEW_V1,
 			AI_Task_Type::GENERATE_TRANSLATION_PLAN    => Structured_Output::TRANSLATION_PLAN_V1,
 			AI_Task_Type::GENERATE_PERFORMANCE_REPORT  => Structured_Output::PERFORMANCE_REPORT_V1,

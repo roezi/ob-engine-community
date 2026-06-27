@@ -4,7 +4,7 @@ This queue is ordered. Each mission should be delivered as one PR with explicit 
 
 ## Current next mission
 
-After the `v0.16.1` addon-boundary patch, the next runtime target is `v0.17.0` — Auto Post Draft Generator inside the bundled Auto Post / Import Community addon, not unrestricted OBE Core. Auto Post Plans are generated into Library only and remain review-first.
+After the `v0.18.0` Editorial Humanizer / Readability addon foundation, the next runtime target is `v0.19.0` — Hardening pass 1. Editorial revisions remain Library-only, `needs_review`, and human-review-first.
 
 ## 1. `v0.12.0` — Dry-run / Write Draft Safety Runtime
 

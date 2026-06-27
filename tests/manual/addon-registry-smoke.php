@@ -12,6 +12,7 @@ require_once ABSPATH . 'includes/Addons/Addon_Status.php';
 require_once ABSPATH . 'includes/Addons/Addon_Scope.php';
 require_once ABSPATH . 'includes/Addons/Addon_Definition.php';
 require_once ABSPATH . 'includes/Addons/AutoPost/Auto_Post_Addon.php';
+require_once ABSPATH . 'includes/Addons/Editorial/Editorial_Humanizer_Addon.php';
 require_once ABSPATH . 'includes/Addons/Addon_Registry.php';
 use OBEngine\Addons\Addon_Definition; use OBEngine\Addons\Addon_Registry; use OBEngine\Addons\Addon_Scope; use OBEngine\Addons\Addon_Status; use OBEngine\Addons\AutoPost\Auto_Post_Addon;
 function obe_addon_assert( $condition, $message ) { if ( ! $condition ) { fwrite( STDERR, "FAIL: $message\n" ); exit( 1 ); } }
@@ -24,6 +25,11 @@ obe_addon_assert( 'badid' === $invalid->get_id(), 'definition ID should be sanit
 obe_addon_assert( Addon_Status::DISABLED === $invalid->get_status(), 'invalid status should normalize.' );
 obe_addon_assert( Addon_Scope::COMMUNITY === $invalid->get_scope(), 'invalid scope should normalize.' );
 $registry = new Addon_Registry();
+$humanizer = $registry->get( 'editorial_humanizer' );
+obe_addon_assert( $humanizer instanceof Addon_Definition, 'Editorial Humanizer should exist.' );
+obe_addon_assert( $humanizer->is_enabled(), 'Editorial Humanizer should be enabled.' );
+obe_addon_assert( $humanizer->is_community(), 'Editorial Humanizer should be community.' );
+obe_addon_assert( 'ob-engine-humanizer' === $humanizer->get_menu_slug(), 'Editorial Humanizer should expose OBE submenu slug.' );
 $auto = $registry->get( 'auto_post' );
 obe_addon_assert( $auto instanceof Addon_Definition, 'Auto Post should exist.' );
 obe_addon_assert( $auto->is_enabled(), 'Auto Post should be enabled.' );

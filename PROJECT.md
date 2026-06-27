@@ -6,10 +6,10 @@
 
 ## Current status
 
-- **Current plugin version:** `0.17.0`
-- **Current stage:** Auto Post Draft Generator complete
+- **Current plugin version:** `0.18.0`
+- **Current stage:** Editorial Humanizer / Readability addon foundation complete
 - **Current mission status:** Auto Post / Import can generate review-first content draft candidates from Auto Post Plans into Library as `needs_review`, without writing WordPress posts.
-- **Next runtime target:** `v0.18.0` — Addons UI Hardening
+- **Next runtime target:** `v0.19.0` — Hardening pass 1
 
 ## MVP target summary
 

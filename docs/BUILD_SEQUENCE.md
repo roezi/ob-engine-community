@@ -4,7 +4,7 @@ OBE v1.0 must be built in an order that locks architecture before runtime behavi
 
 ## Sequence
 
-The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.16.1`, the Addon Registry foundation is complete, Auto Post / Import is a bundled Community addon, and the next runtime target is `v0.17.0` Auto Post Draft Generator inside that addon boundary.
+The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.18.0`, the Editorial Humanizer / Readability addon foundation is complete as a bundled Community addon. The next runtime target is `v0.19.0` hardening while preserving Library-first, review-first behavior.
 
 1. Master Architecture
 2. UI Blueprint
@@ -92,3 +92,5 @@ Final hardening happens late, but every implementation stage must include capabi
 ## Current addon boundary
 
 OBE Core owns the admin shell, provider settings, AI engine contracts/orchestration, Library, Activity, Approval, Safety, Writing, and Addon registry/contracts. Bundled Community addons own feature workflows such as Auto Post / Import, SEO Review, Performance Review, and Translation Plan. Future Pro/private addons, private adapters, private prompts, private field maps, partner API connectors, and production/client-specific workflows are not included in the public runtime.
+
+- `v0.18.0` — Editorial Humanizer / Readability Addon Foundation.
