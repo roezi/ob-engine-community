@@ -24,6 +24,7 @@ final class Admin_Menu {
 	public const LIBRARY_SLUG = 'ob-engine-library';
 	public const GENERATE_SLUG = 'ob-engine-generate';
 	public const AUTO_POST_SLUG = 'ob-engine-auto-post';
+	public const WORKFLOW_SLUG = 'ob-engine-workflow';
 	public const ACTIVITY_SLUG = 'ob-engine-activity';
 	public const ADDONS_SLUG = 'ob-engine-addons';
 
@@ -45,6 +46,7 @@ final class Admin_Menu {
 		$generate  = new Manual_Generate_Page();
 		$auto_post = new Auto_Post_Import_Page();
 		$humanizer = new Editorial_Humanizer_Page();
+		$workflow  = new Workflow_Visualizer_Page();
 		$addons    = new Addon_Admin_Page();
 		$activity  = new Activity_Admin_Page();
 
@@ -114,6 +116,15 @@ final class Admin_Menu {
 			array( $generate, 'render' )
 		);
 
+
+		add_submenu_page(
+			self::SLUG,
+			esc_html__( 'Workflow', 'ob-engine' ),
+			esc_html__( 'Workflow', 'ob-engine' ),
+			Capabilities::MANAGE,
+			self::WORKFLOW_SLUG,
+			array( $workflow, 'render' )
+		);
 
 		add_submenu_page(
 			self::SLUG,

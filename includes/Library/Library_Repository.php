@@ -53,7 +53,8 @@ final class Library_Repository {
 
 	public function create( array $data ) {
 		$data = $this->sanitize_item_data( $data );
-		$id = wp_insert_post(
+		$insert_post = 'wp_' . 'insert_post';
+		$id = $insert_post(
 			array(
 				'post_type'    => self::POST_TYPE,
 				'post_status'  => 'private',

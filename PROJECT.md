@@ -6,10 +6,10 @@
 
 ## Current status
 
-- **Current plugin version:** `0.18.0`
-- **Current stage:** Editorial Humanizer / Readability addon foundation complete
-- **Current mission status:** Auto Post / Import can generate review-first content draft candidates from Auto Post Plans into Library as `needs_review`, without writing WordPress posts.
-- **Next runtime target:** `v0.19.0` — Hardening pass 1
+- **Current plugin version:** `0.19.0`
+- **Current stage:** Pre-publish hardening + workflow visualizer complete
+- **Current mission status:** Hardening pass adds stricter service-level write gates, workflow visualization metadata, and QC/release gate documentation.
+- **Next runtime target:** `v1.0` — Stable community base after Roezi manual QC
 
 ## MVP target summary
 

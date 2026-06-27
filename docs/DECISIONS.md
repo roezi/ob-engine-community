@@ -107,3 +107,9 @@ References: [Admin UI Blueprint](ADMIN_UI_BLUEPRINT.md), [UI Design System](UI_D
 **Decision:** OBE Core owns shared contracts and safety primitives, while Auto Post / Import is a bundled Community addon/module registered inside the OBE admin experience.
 
 **Reason:** The Community plugin must not become a monolithic all-features runtime. Future SEO Review, Performance Review, and Translation Plan workflows can use the same public addon metadata boundary, while Workflow Pro and private adapters remain outside Community runtime.
+
+## 0014 — Workflow visualizer is metadata-only in Community
+
+**Decision:** The Community workflow visualizer is static, review-first metadata. It does not run agents, call AI, execute tools, start background jobs, or write posts.
+
+**Reason:** v0.19.0 is a pre-publish hardening gate. Any future agent/tool execution belongs to Workflow Pro/private tooling unless explicitly approved later.
