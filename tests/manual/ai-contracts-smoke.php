@@ -1,27 +1,22 @@
 <?php
 /**
- * Manual smoke checks for AI contract value objects.
+ * Manual smoke check for AI contract classes without a WordPress runtime.
  *
- * This script does not require a real WordPress runtime and performs no
- * external API calls or WordPress writes.
- *
- * Run from the repository root:
+ * Run from repository root:
  * php tests/manual/ai-contracts-smoke.php
- *
- * @package OBEngine
  */
 
-define( 'ABSPATH', __DIR__ . '/../../' );
+define( 'ABSPATH', dirname( __DIR__, 2 ) . '/' );
 
-require_once __DIR__ . '/../../includes/AI/Model_Profile.php';
-require_once __DIR__ . '/../../includes/AI/AI_Task_Type.php';
-require_once __DIR__ . '/../../includes/AI/AI_Error.php';
-require_once __DIR__ . '/../../includes/AI/Usage_Record.php';
-require_once __DIR__ . '/../../includes/AI/AI_Request.php';
-require_once __DIR__ . '/../../includes/AI/AI_Response.php';
-require_once __DIR__ . '/../../includes/AI/Structured_Output.php';
-require_once __DIR__ . '/../../includes/Providers/Provider_Interface.php';
-require_once __DIR__ . '/../../includes/Providers/Provider_Result.php';
+require_once ABSPATH . 'includes/AI/Model_Profile.php';
+require_once ABSPATH . 'includes/AI/AI_Task_Type.php';
+require_once ABSPATH . 'includes/AI/AI_Error.php';
+require_once ABSPATH . 'includes/AI/Usage_Record.php';
+require_once ABSPATH . 'includes/AI/AI_Request.php';
+require_once ABSPATH . 'includes/AI/AI_Response.php';
+require_once ABSPATH . 'includes/AI/Structured_Output.php';
+require_once ABSPATH . 'includes/Providers/Provider_Interface.php';
+require_once ABSPATH . 'includes/Providers/Provider_Result.php';
 
 use OBEngine\AI\AI_Error;
 use OBEngine\AI\AI_Request;
@@ -29,34 +24,30 @@ use OBEngine\AI\AI_Response;
 use OBEngine\AI\AI_Task_Type;
 use OBEngine\AI\Model_Profile;
 use OBEngine\Providers\Provider_Interface;
+use OBEngine\Providers\Provider_Result;
 
 $request = AI_Request::from_array(
 	array(
-		'task_type'        => AI_Task_Type::CLASSIFY_INTENT,
-		'input'            => array( 'text' => 'Example input.' ),
-		'instructions'     => 'Classify the request intent.',
-		'model_profile'    => Model_Profile::FAST,
-		'reasoning_effort' => 'low',
-		'verbosity'        => 'low',
-		'metadata'         => array( 'source' => 'manual_smoke' ),
+		'task_type'    => AI_Task_Type::CLASSIFY_INTENT,
+		'input'        => 'Summarize this source safely.',
+		'instructions' => 'Classify intent only; do not write content.',
+		'model_profile'=> Model_Profile::FAST,
+		'metadata'     => array( 'smoke' => true ),
 	)
 );
 
-$defaults = Model_Profile::defaults( Model_Profile::FAST );
-$completed = AI_Response::completed( $request, array( 'output_json' => array( 'intent' => 'example' ) ) );
-$failed = AI_Response::failed( $request, AI_Error::invalid_request( 'Example validation error.' ) );
+assert( $request->is_valid() );
+assert( 'low' === $request->to_array()['reasoning_effort'] );
+assert( 'low' === $request->to_array()['verbosity'] );
 
-$checks = array(
-	'known task type validates'            => $request->is_valid(),
-	'fast profile defaults are expected'   => 'low' === $defaults['reasoning_effort'] && 'low' === $defaults['verbosity'] && false === $defaults['background'],
-	'completed response is successful'     => $completed->is_success(),
-	'failed response is not successful'    => ! $failed->is_success(),
-	'provider generate contract exists'    => method_exists( Provider_Interface::class, 'generate' ),
-);
+$response = AI_Response::completed( $request, array( 'output_json' => array( 'intent' => 'summarize_activity' ) ) );
+assert( $response->is_success() );
+assert( array( 'intent' => 'summarize_activity' ) === $response->get_output_json() );
 
-foreach ( $checks as $label => $passed ) {
-	echo ( $passed ? 'PASS' : 'FAIL' ) . ': ' . $label . PHP_EOL;
-	if ( ! $passed ) {
-		exit( 1 );
-	}
-}
+$failed = AI_Response::failed( $request, AI_Error::invalid_request( 'Invalid smoke request.' ) );
+assert( 'failed' === $failed->get_status() );
+
+$result = Provider_Result::unsupported( 'example', Provider_Interface::CAPABILITY_WEB_SEARCH, 'Not enabled.' );
+assert( false === $result->to_array()['supported'] );
+
+echo "AI contracts smoke check passed.\n";
