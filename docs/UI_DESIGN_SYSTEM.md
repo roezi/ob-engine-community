@@ -2,6 +2,8 @@
 
 OBE — Optimization-Based Engine — uses WordPress-native admin patterns. The interface should feel like a professional WordPress admin cockpit: clean, card-based, readable, consistent, and safety-focused, not a heavy SaaS dashboard.
 
+`DESIGN.md` is the machine-readable token source of truth for OBE admin colors, typography, spacing, rounded corners, layout widths, and component defaults. Keep implementation tokens aligned with this design system and update both documents together when token values change.
+
 ## Foundation
 
 ### Page widths

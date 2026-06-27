@@ -44,6 +44,10 @@ Never commit:
 
 When in doubt, write a neutral public interface or documentation note instead of copying private implementation details.
 
+## Admin UI design tokens
+
+Before implementing admin UI, Codex and other coding agents must read `DESIGN.md` and use it as the machine-readable token source for OBE admin colors, typography, spacing, rounded corners, layout widths, and component defaults. Keep admin UI implementation aligned with `docs/UI_DESIGN_SYSTEM.md` and the WordPress-native safety-first cockpit direction.
+
 ## Documentation style
 
 - Be practical, concise, and specific.
