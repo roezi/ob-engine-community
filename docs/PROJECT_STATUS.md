@@ -2,10 +2,10 @@
 
 ## Current snapshot
 
-- **Plugin version:** `0.16.1`
-- **Stage:** Addon Registry foundation complete
-- **Mission status:** Auto Post / Import is now a bundled Community addon/module in the addon registry while keeping existing review-first plan generation behavior.
-- **Next runtime target:** `v0.17.0` — Auto Post Draft Generator
+- **Plugin version:** `0.17.0`
+- **Stage:** Auto Post Draft Generator complete
+- **Mission status:** Auto Post / Import is a bundled Community addon/module that can explicitly generate review-first content draft candidates into Library from Auto Post Plans.
+- **Next runtime target:** `v0.18.0` — Addons UI Hardening
 
 ## Completed milestones
 
@@ -26,6 +26,7 @@
 | `v0.15.0` | Field Mapping + Validation | Complete |
 | `v0.16.0` | Auto Post Plan Generator | Complete |
 | `v0.16.1` | Addon Registry + Auto Post bundled addon boundary | Complete |
+| `v0.17.0` | Auto Post Draft Generator | Complete |
 
 ## Current capabilities
 
@@ -38,13 +39,13 @@
 - Source previews can be created from generic pasted input.
 - Field mappings can be validated and saved.
 - Auto Post Plans can be generated explicitly from Field Mapping items and saved as `needs_review`.
+- Auto Post draft candidates can be generated explicitly from Auto Post Plans and saved as Library `content_draft` items with `needs_review` status.
 - OBE → Addons lists bundled Community addon metadata and marks Auto Post / Import as enabled/community.
 - Library items can be reviewed and approved/rejected.
 - Activity Log records redacted events.
 
 ## Intentionally not implemented yet
 
-- Auto Post draft generation.
 - Bulk Auto Post generation.
 - Auto Post plan approval-to-draft handoff.
 - Gemini/Anthropic/OpenRouter runtime providers.
