@@ -44,6 +44,10 @@ Never commit:
 
 When in doubt, write a neutral public interface or documentation note instead of copying private implementation details.
 
+## Admin UI design tokens
+
+Before implementing or changing admin UI, read `DESIGN.md` and treat it as the machine-readable source of truth for OBE admin UI tokens. Keep implementation aligned with the WordPress-native values, safety-first labels, and addon integration rules documented there.
+
 ## Documentation style
 
 - Be practical, concise, and specific.

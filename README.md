@@ -65,6 +65,7 @@ This repository is the community/open-source version of OB Engine. The project i
 - [Information Architecture](docs/INFORMATION_ARCHITECTURE.md)
 
 - [Admin UI Blueprint](docs/ADMIN_UI_BLUEPRINT.md) — WordPress-native OBE admin cockpit, menu structure, pages, and safety-first UI flows.
+- [Design tokens](DESIGN.md) — machine-readable OBE admin UI tokens for coding agents and future implementation.
 - [UI Design System](docs/UI_DESIGN_SYSTEM.md) — page widths, spacing, typography, colors, cards, forms, badges, tables, and confirmations.
 - [Addons Integration Blueprint](docs/ADDONS_INTEGRATION_BLUEPRINT.md) — addon placement inside OBE and module detail page contracts.
 - [Auto Post Workflow Blueprint](docs/AUTO_POST_WORKFLOW_BLUEPRINT.md) — source-to-draft import pipeline and review-first workflow.
