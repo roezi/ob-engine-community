@@ -86,3 +86,11 @@ This log records product and architecture decisions for OB Engine Community.
 
 **Reason:** Community Core should stay minimal, public-safe, BYOK-friendly, and dry-run/approval-first before advanced agent orchestration.
 
+## Decision: OBE admin UI and addons stay inside one WordPress admin experience
+
+- Status: Accepted
+- Date: 2026-06-27
+
+OBE uses one top-level WordPress admin menu named **OBE** with Dashboard, Library, Auto Post / Import, Workflow, Addons, Activity, and Settings. Addons are integrated modules inside OBE and must not create separate top-level WordPress admin menus. The UI follows WordPress-native admin patterns and the public design system. Auto Post / Import remains review-first and writes only approved `draft` or `needs_review` content.
+
+References: [Admin UI Blueprint](ADMIN_UI_BLUEPRINT.md), [UI Design System](UI_DESIGN_SYSTEM.md), [Addons Integration Blueprint](ADDONS_INTEGRATION_BLUEPRINT.md), and [Auto Post Workflow Blueprint](AUTO_POST_WORKFLOW_BLUEPRINT.md).
