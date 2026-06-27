@@ -43,6 +43,7 @@ $request = AI_Request::from_array(
 
 $client = new OpenAI_Responses_Client();
 $payload = $client->build_payload( $request );
+$safe_transport_failure = $client->send_payload( $payload, 'sk-example-not-real' );
 $response = $client->map_response(
 	$request,
 	array(
@@ -68,6 +69,9 @@ $checks = array(
 	'payload text verbosity maps from request'    => 'medium' === $payload['text']['verbosity'],
 	'payload store defaults false'                => false === $payload['store'],
 	'payload background defaults false'           => false === $payload['background'],
+	'payload omits tools by default'              => ! isset( $payload['tools'] ),
+	'payload omits tool choice by default'        => ! isset( $payload['tool_choice'] ),
+	'transport fails safely without WP HTTP API'  => isset( $safe_transport_failure['success'], $safe_transport_failure['error']['code'] ) && false === $safe_transport_failure['success'],
 	'mapped response is successful'               => $response->is_success(),
 	'output text is extracted'                    => 'Example output text.' === $response->get_output_text(),
 	'usage maps to normalized record'             => isset( $mapped['usage']['total_tokens'] ) && 15 === $mapped['usage']['total_tokens'],
