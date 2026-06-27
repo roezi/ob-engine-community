@@ -21,6 +21,7 @@ final class Admin_Menu {
 	public const SETTINGS_SLUG = 'ob-engine-settings';
 	public const LIBRARY_SLUG = 'ob-engine-library';
 	public const GENERATE_SLUG = 'ob-engine-generate';
+	public const AUTO_POST_SLUG = 'ob-engine-auto-post';
 	public const ACTIVITY_SLUG = 'ob-engine-activity';
 
 	/**
@@ -39,6 +40,7 @@ final class Admin_Menu {
 		$settings  = new Settings_Page();
 		$library   = new Library_Admin_Page();
 		$generate  = new Manual_Generate_Page();
+		$auto_post = new Auto_Post_Import_Page();
 		$activity  = new Activity_Admin_Page();
 
 		add_menu_page(
@@ -69,6 +71,15 @@ final class Admin_Menu {
 			array( $library, 'render' )
 		);
 
+
+		add_submenu_page(
+			self::SLUG,
+			esc_html__( 'Auto Post / Import', 'ob-engine' ),
+			esc_html__( 'Auto Post / Import', 'ob-engine' ),
+			Capabilities::MANAGE,
+			self::AUTO_POST_SLUG,
+			array( $auto_post, 'render' )
+		);
 
 		add_submenu_page(
 			self::SLUG,
