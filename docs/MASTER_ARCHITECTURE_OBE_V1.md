@@ -287,3 +287,7 @@ ob-engine-community/
 - [Responses API Strategy](RESPONSES_API_STRATEGY.md)
 - [Information Architecture](INFORMATION_ARCHITECTURE.md)
 - [Build Sequence](BUILD_SEQUENCE.md)
+
+## UI blueprint cross-links
+
+The admin implementation contract is documented in [Admin UI Blueprint](ADMIN_UI_BLUEPRINT.md), [UI Design System](UI_DESIGN_SYSTEM.md), [Addons Integration Blueprint](ADDONS_INTEGRATION_BLUEPRINT.md), and [Auto Post Workflow Blueprint](AUTO_POST_WORKFLOW_BLUEPRINT.md). These documents define the OBE sidebar, addon placement, WordPress-native UI rules, safety confirmations, and source-to-draft workflow steps.

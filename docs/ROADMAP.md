@@ -91,3 +91,13 @@ This roadmap keeps OB Engine Community focused on a minimal, safe public foundat
 - Stable workflow contract
 - Minimal safe automation workflows
 - Release notes and support policy
+
+## Admin UI blueprint v0.4
+
+- Define the WordPress-native OBE sidebar: Dashboard, Library, Auto Post / Import, Workflow, Addons, Activity, and Settings.
+- Treat addons as integrated OBE modules, not separate top-level WordPress admin products.
+- Use the UI design system for spacing, cards, tables, forms, badges, confirmations, and safety-first labels.
+- Keep Auto Post / Import review-first: source intake → preview → field mapping → validation → research plan → draft plan → generate → improve → dry-run → approval → write draft/needs_review.
+- Acknowledge final-stage hardening while requiring minimum WordPress safety for every implementation.
+
+See [Admin UI Blueprint](ADMIN_UI_BLUEPRINT.md), [UI Design System](UI_DESIGN_SYSTEM.md), [Addons Integration Blueprint](ADDONS_INTEGRATION_BLUEPRINT.md), and [Auto Post Workflow Blueprint](AUTO_POST_WORKFLOW_BLUEPRINT.md).
