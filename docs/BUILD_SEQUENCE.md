@@ -4,7 +4,7 @@ OBE v1.0 must be built in an order that locks architecture before runtime behavi
 
 ## Sequence
 
-The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.18.0`, the Editorial Humanizer / Readability addon foundation is complete as a bundled Community addon. The next runtime target is `v0.19.0` hardening while preserving Library-first, review-first behavior.
+The historical blueprint sequence remains below, but current mission tracking now lives in [Project Command Center](../PROJECT.md), [Project Status](PROJECT_STATUS.md), [Milestones](MILESTONES.md), and [Next Missions](NEXT_MISSIONS.md). As of `v0.19.0`, the Editorial Humanizer / Readability addon foundation is complete as a bundled Community addon. The next runtime target is `v0.19.0` hardening while preserving Library-first, review-first behavior.
 
 1. Master Architecture
 2. UI Blueprint

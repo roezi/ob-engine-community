@@ -4,7 +4,7 @@ This queue is ordered. Each mission should be delivered as one PR with explicit 
 
 ## Current next mission
 
-After the `v0.18.0` Editorial Humanizer / Readability addon foundation, the next runtime target is `v0.19.0` — Hardening pass 1. Editorial revisions remain Library-only, `needs_review`, and human-review-first.
+After `v0.19.0` Hardening + QC + Workflow Visualizer, the next runtime target is `v1.0` only after Roezi manual QC. Major feature work remains frozen until the release gate passes.
 
 ## 1. `v0.12.0` — Dry-run / Write Draft Safety Runtime
 
@@ -69,7 +69,7 @@ After the `v0.18.0` Editorial Humanizer / Readability addon foundation, the next
 - **Expected version bump:** `0.17.0` → `0.18.0`.
 - **Definition of done:** Maintainers can see addon/module cards inside OBE with safe statuses and no runtime side effects.
 
-## 8. `v0.19.0` — Hardening pass 1
+## 8. `v0.19.0` — Hardening pass 1 (complete)
 
 - **Goal:** Perform the first cross-cutting safety, reliability, and documentation hardening pass.
 - **Scope:** Capability review, nonce review, sanitization/escaping review, redaction checks, documentation alignment, lightweight manual checks.
@@ -77,3 +77,12 @@ After the `v0.18.0` Editorial Humanizer / Readability addon foundation, the next
 - **Safety requirements:** Preserve dry-run-first, Library-first, approval-first, draft/needs_review defaults, and secret masking.
 - **Expected version bump:** `0.18.0` → `0.19.0` if runtime hardening changes are included; no bump for docs-only hardening.
 - **Definition of done:** The current MVP runtime has a documented safety review and fixes for any high-priority gaps found in scope.
+
+## 9. `v1.0` — Stable community base release gate
+
+- **Goal:** Publish only after Roezi manual QC confirms the review-first workflow, visualizer, write gates, and public/private boundary.
+- **Scope:** Manual QC from `docs/QC_CHECKLIST.md`, release blockers from `docs/RELEASE_GATE.md`, and any final documentation corrections.
+- **Out of scope:** New generation features, Pro/private runtime, private adapters, partner connectors, file upload/XLSX parsing, autonomous agents, server-side executors, REST/MCP/WP-CLI/cron/workers.
+- **Safety requirements:** No publish unless workflow visualizer reviewed, write gate verified, and public/private boundary verified.
+- **Expected version bump:** Reserved for stable release once QC passes.
+- **Definition of done:** Every required manual QC item passes and no release blocker remains.

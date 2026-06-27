@@ -76,7 +76,7 @@ final class Structured_Output {
 			self::TRANSLATION_PLAN_V1 => 'translation_plan',
 			self::PERFORMANCE_REPORT_V1 => 'performance_report',
 			self::WORKFLOW_PLAN_V1 => 'workflow_plan',
-			self::FIELD_MAPPING_PLAN_V1 => 'mapping_plan',
+			self::FIELD_MAPPING_PLAN_V1 => 'field_mapping',
 			self::RESEARCH_PLAN_V1 => 'workflow_plan',
 		);
 		return isset( $map[ $schema_id ] ) ? $map[ $schema_id ] : '';
