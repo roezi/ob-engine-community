@@ -44,6 +44,7 @@ final class Admin_Menu {
 		$library   = new Library_Admin_Page();
 		$generate  = new Manual_Generate_Page();
 		$auto_post = new Auto_Post_Import_Page();
+		$humanizer = new Editorial_Humanizer_Page();
 		$addons    = new Addon_Admin_Page();
 		$activity  = new Activity_Admin_Page();
 
@@ -76,7 +77,8 @@ final class Admin_Menu {
 		);
 
 
-		$auto_post_addon = ( new Addon_Registry() )->get( 'auto_post' );
+		$registry = new Addon_Registry();
+		$auto_post_addon = $registry->get( 'auto_post' );
 		// Auto Post / Import is a bundled Community addon registered under the OBE admin shell.
 		if ( $auto_post_addon && $auto_post_addon->is_enabled() ) {
 			add_submenu_page(
@@ -86,6 +88,20 @@ final class Admin_Menu {
 				Capabilities::MANAGE,
 				$auto_post_addon->get_menu_slug(),
 				array( $auto_post, 'render' )
+			);
+		}
+
+
+		$humanizer_addon = $registry->get( 'editorial_humanizer' );
+		// Editorial Humanizer / Readability is a bundled Community addon under OBE.
+		if ( $humanizer_addon && $humanizer_addon->is_enabled() ) {
+			add_submenu_page(
+				self::SLUG,
+				esc_html__( 'Humanizer', 'ob-engine' ),
+				esc_html__( 'Humanizer', 'ob-engine' ),
+				Capabilities::MANAGE,
+				$humanizer_addon->get_menu_slug(),
+				array( $humanizer, 'render' )
 			);
 		}
 

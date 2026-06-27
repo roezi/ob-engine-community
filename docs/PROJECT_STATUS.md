@@ -2,10 +2,10 @@
 
 ## Current snapshot
 
-- **Plugin version:** `0.17.0`
-- **Stage:** Auto Post Draft Generator complete
-- **Mission status:** Auto Post / Import is a bundled Community addon/module that can explicitly generate review-first content draft candidates into Library from Auto Post Plans.
-- **Next runtime target:** `v0.18.0` — Addons UI Hardening
+- **Plugin version:** `0.18.0`
+- **Stage:** Editorial Humanizer / Readability addon foundation complete
+- **Mission status:** Editorial Humanizer / Readability is a bundled Community addon/module that can explicitly generate review-first editorial revision candidates from eligible Library drafts and save them back to Library as `needs_review`.
+- **Next runtime target:** `v0.19.0` — Hardening pass 1
 
 ## Completed milestones
 
@@ -27,6 +27,7 @@
 | `v0.16.0` | Auto Post Plan Generator | Complete |
 | `v0.16.1` | Addon Registry + Auto Post bundled addon boundary | Complete |
 | `v0.17.0` | Auto Post Draft Generator | Complete |
+| `v0.18.0` | Editorial Humanizer / Readability Addon Foundation | Complete |
 
 ## Current capabilities
 
@@ -40,6 +41,7 @@
 - Field mappings can be validated and saved.
 - Auto Post Plans can be generated explicitly from Field Mapping items and saved as `needs_review`.
 - Auto Post draft candidates can be generated explicitly from Auto Post Plans and saved as Library `content_draft` items with `needs_review` status.
+- Editorial revision candidates can be generated explicitly from eligible Library drafts and saved as private Library `editorial_revision` items with `needs_review` status.
 - OBE → Addons lists bundled Community addon metadata and marks Auto Post / Import as enabled/community.
 - Library items can be reviewed and approved/rejected.
 - Activity Log records redacted events.

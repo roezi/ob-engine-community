@@ -2,7 +2,7 @@
 
 ## Current version
 
-The plugin runtime version is currently `0.17.0`.
+The plugin runtime version is currently `0.18.0`.
 
 ## Version rules
 
@@ -11,7 +11,7 @@ The plugin runtime version is currently `0.17.0`.
 - Docs-only/project-planning PRs do not bump the plugin version.
 - Never downgrade the plugin version.
 - Do not bump the version just because a planning document changed.
-- The next runtime feature after `v0.17.0` should be `v0.18.0`.
+- The next runtime feature after `v0.18.0` should be `v0.19.0`.
 - `v1.0` is reserved for a stable community base after hardening.
 
 ## Examples

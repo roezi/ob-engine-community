@@ -3,7 +3,7 @@
  * Plugin Name: OB Engine Community
  * Plugin URI: https://github.com/roezi/ob-engine-community
  * Description: Safety-first WordPress automation foundation for OB Engine Community.
- * Version: 0.17.0
+ * Version: 0.18.0
  * Author: Optimized Builder
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OB_ENGINE_VERSION', '0.17.0' );
+define( 'OB_ENGINE_VERSION', '0.18.0' );
 define( 'OB_ENGINE_FILE', __FILE__ );
 define( 'OB_ENGINE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'OB_ENGINE_URL', plugin_dir_url( __FILE__ ) );
@@ -76,6 +76,7 @@ require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Status.php';
 require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Scope.php';
 require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Definition.php';
 require_once OB_ENGINE_PATH . 'includes/Addons/AutoPost/Auto_Post_Addon.php';
+require_once OB_ENGINE_PATH . 'includes/Addons/Editorial/Editorial_Humanizer_Addon.php';
 require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Registry.php';
 require_once OB_ENGINE_PATH . 'includes/Addons/Addon_Admin_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Sources/Source_Type.php';
@@ -92,10 +93,14 @@ require_once OB_ENGINE_PATH . 'includes/AutoPost/Auto_Post_Plan.php';
 require_once OB_ENGINE_PATH . 'includes/AutoPost/Auto_Post_Plan_Service.php';
 require_once OB_ENGINE_PATH . 'includes/AutoPost/Auto_Post_Draft.php';
 require_once OB_ENGINE_PATH . 'includes/AutoPost/Auto_Post_Draft_Service.php';
+require_once OB_ENGINE_PATH . 'includes/Editorial/Editorial_Tone.php';
+require_once OB_ENGINE_PATH . 'includes/Editorial/Editorial_Revision.php';
+require_once OB_ENGINE_PATH . 'includes/Editorial/Editorial_Humanizer_Service.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Dashboard_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Settings_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Manual_Generate_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Auto_Post_Import_Page.php';
+require_once OB_ENGINE_PATH . 'includes/Admin/Editorial_Humanizer_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Admin_Menu.php';
 require_once OB_ENGINE_PATH . 'includes/Core/Plugin.php';
 
