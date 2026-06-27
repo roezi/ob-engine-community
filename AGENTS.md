@@ -4,7 +4,7 @@ Instructions for Codex and other agents working in this repository.
 
 ## Repository purpose
 
-OB Engine Community is the public, GPL-compatible community base of Optimized Builder Engine: a safety-first WordPress automation plugin.
+OB Engine Community is the public, GPL-compatible community base of OBE — Optimization-Based Engine: a safety-first WordPress optimization and automation plugin.
 
 This repository must stay clean, minimal, secure, addon-friendly, and suitable as a public portfolio project. Do not import private prototype code, client-specific logic, production data, or experimental features without an explicit public design review.
 
@@ -38,8 +38,8 @@ Never commit:
 
 - secrets, tokens, API keys, cookies, credentials, or private endpoints
 - production-specific data or customer records
-- Destinasindo-specific field maps, prompts, workflows, schemas, or business rules
-- private Optimized Builder Engine prototype code
+- private-project-specific field maps, prompts, workflows, schemas, or business rules
+- private Optimization-Based Engine prototype code
 - proprietary provider logic that cannot be distributed under the repository license
 
 When in doubt, write a neutral public interface or documentation note instead of copying private implementation details.
