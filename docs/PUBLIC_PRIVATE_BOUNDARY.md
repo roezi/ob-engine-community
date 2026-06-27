@@ -1,6 +1,6 @@
 # Public/Private Boundary
 
-OB Engine Community is the public, GPL-compatible base of Optimized Builder Engine. It must remain clean, reusable, and safe to publish.
+OB Engine Community is the public, GPL-compatible base of Optimization-Based Engine. It must remain clean, reusable, and safe to publish.
 
 ## Allowed in the public repository
 
@@ -17,7 +17,7 @@ OB Engine Community is the public, GPL-compatible base of Optimized Builder Engi
 - private OBE prototype code unless intentionally cleaned and relicensed
 - pro-only feature implementations
 - customer records, exports, logs, screenshots, or credentials
-- Destinasindo-specific field maps, schemas, prompts, workflows, or business rules
+- private-project-specific field maps, schemas, prompts, workflows, or business rules
 - production endpoints or environment details
 - secrets, tokens, cookies, API keys, or private certificates
 - hidden autopublish flows

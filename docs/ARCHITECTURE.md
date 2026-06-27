@@ -55,7 +55,7 @@ Each tool must declare:
 
 ### 4. Field registry
 
-The field registry describes public, generic WordPress field mappings for posts, terms, metadata, SEO fields, and addon-owned fields. It must not include production-specific or Destinasindo-specific field maps.
+The field registry describes public, generic WordPress field mappings for posts, terms, metadata, SEO fields, and addon-owned fields. It must not include production-specific or private-project-specific field maps.
 
 ### 5. Addon layer
 

@@ -1,6 +1,6 @@
 # OB Engine Community
 
-OB Engine Community is an open-source WordPress automation engine for safe content operations, SEO workflows, translation cleanup, metadata mapping, and maintainer-friendly website automation.
+OB Engine Community is the public base of OBE — Optimization-Based Engine — an open-source WordPress optimization and automation engine for safe content operations, SEO workflows, translation cleanup, metadata mapping, and maintainer-friendly website automation.
 
 The project is built for WordPress maintainers and developers who need to reduce repetitive operational work while keeping safety controls such as dry-runs, audit logs, review gates, role checks, and secret masking.
 
@@ -53,6 +53,11 @@ This repository is the community/open-source version of OB Engine. The project i
 
 - [Product brief](docs/PRODUCT_BRIEF.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Master Architecture OBE v1.0](docs/MASTER_ARCHITECTURE_OBE_V1.md)
+- [AI Engine Architecture](docs/AI_ENGINE_ARCHITECTURE.md)
+- [Responses API Strategy](docs/RESPONSES_API_STRATEGY.md)
+- [Information Architecture](docs/INFORMATION_ARCHITECTURE.md)
+- [Build Sequence](docs/BUILD_SEQUENCE.md)
 - [Safety contract](docs/SAFETY_CONTRACT.md)
 - [Addon contract](docs/ADDON_CONTRACT.md)
 - [Workflow contract](docs/WORKFLOW_CONTRACT.md)

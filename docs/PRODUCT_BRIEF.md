@@ -2,7 +2,7 @@
 
 ## What OB Engine Community is
 
-OB Engine Community is the public, GPL-compatible base of Optimized Builder Engine: a WordPress automation plugin for maintainers who want safer, repeatable content and site-operation workflows.
+OB Engine Community is the public, GPL-compatible base of Optimization-Based Engine: a WordPress automation plugin for maintainers who want safer, repeatable content and site-operation workflows.
 
 The community edition focuses on a small, understandable core:
 
@@ -22,7 +22,7 @@ The community edition focuses on a small, understandable core:
 
 ## What it is not
 
-OB Engine Community is not a private client automation dump, a prompt collection, or an autopublishing system. It must not include production data, private prototype code, private provider logic, or Destinasindo-specific field maps.
+OB Engine Community is not a private client automation dump, a prompt collection, or an autopublishing system. It must not include production data, private prototype code, private provider logic, or private-project-specific field maps.
 
 ## Core product promise
 
