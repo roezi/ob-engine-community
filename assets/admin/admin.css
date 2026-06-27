@@ -1,0 +1,33 @@
+.ob-engine-wrap {
+	max-width: 960px;
+}
+
+.ob-engine-card {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	margin: 16px 0;
+	padding: 16px 20px;
+}
+
+.ob-engine-badge {
+	background: #e7f5ff;
+	border: 1px solid #72aee6;
+	border-radius: 999px;
+	color: #0a4b78;
+	display: inline-block;
+	font-weight: 600;
+	padding: 4px 10px;
+}
+
+.ob-engine-label {
+	display: block;
+	font-weight: 600;
+	margin: 12px 0 4px;
+}
+
+.ob-engine-list {
+	list-style: disc;
+	margin-left: 20px;
+}
