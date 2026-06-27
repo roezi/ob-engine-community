@@ -20,6 +20,37 @@ function get_post_meta( $id, $key = '', $single = false ) { $m = $GLOBALS['obe_s
 foreach ( array('Library/Library_Type','Library/Library_Status','Library/Library_Item','Library/Library_Repository','Approval/Approval_Status','Approval/Approval_Record','Approval/Approval_Repository','Safety/Safety_Status','Safety/Safety_Result','Safety/Write_Target','Safety/Dry_Run_Result','Safety/Dry_Run_Repository','Activity/Activity_Action','Activity/Activity_Status','Activity/Activity_Object_Type','Activity/Activity_Repository','Activity/Activity_Logger','Safety/Dry_Run_Service','Writing/Write_Status','Writing/Write_Result','Writing/Write_Record','Writing/Write_Repository','Writing/WordPress_Draft_Writer','Writing/Write_Draft_Service','Workflow/Workflow_Node','Workflow/Workflow_Edge','Workflow/Workflow_Graph') as $f ) { require_once ABSPATH . 'includes/' . $f . '.php'; }
 use OBEngine\Approval\Approval_Repository; use OBEngine\Approval\Approval_Status; use OBEngine\Library\Library_Item; use OBEngine\Library\Library_Repository; use OBEngine\Library\Library_Status; use OBEngine\Library\Library_Type; use OBEngine\Safety\Dry_Run_Service; use OBEngine\Safety\Write_Target; use OBEngine\Workflow\Workflow_Graph; use OBEngine\Writing\WordPress_Draft_Writer; use OBEngine\Writing\Write_Draft_Service;
 function obe_full_smoke_assert( $condition, $message ) { if ( ! $condition ) { fwrite( STDERR, "FAIL: {$message}\n" ); exit( 1 ); } }
+
+function obe_full_smoke_find_string_in_files( string $base_dir, string $needle ): array {
+	$base_dir = rtrim( $base_dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
+	$matches  = array();
+
+	if ( ! is_dir( $base_dir ) ) {
+		return $matches;
+	}
+
+	$iterator = new RecursiveIteratorIterator(
+		new RecursiveDirectoryIterator( $base_dir, FilesystemIterator::SKIP_DOTS )
+	);
+
+	foreach ( $iterator as $file ) {
+		if ( ! $file->isFile() ) {
+			continue;
+		}
+
+		$path = $file->getPathname();
+		$contents = file_get_contents( $path );
+		if ( false === $contents || false === strpos( $contents, $needle ) ) {
+			continue;
+		}
+
+		$relative = substr( $path, strlen( ABSPATH ) );
+		$matches[] = str_replace( DIRECTORY_SEPARATOR, '/', $relative );
+	}
+
+	sort( $matches );
+	return $matches;
+}
 foreach ( Library_Type::all() as $type ) { $expected = in_array( $type, array( Library_Type::CONTENT_DRAFT, Library_Type::EDITORIAL_REVISION ), true ); obe_full_smoke_assert( $expected === Library_Type::is_writeable( $type ), "$type writeability should match contract" ); }
 function obe_item( $id, $type, $status ) { return new Library_Item( array( 'id'=>$id, 'title'=>'Safe title', 'content'=>'Safe content', 'summary'=>'Safe excerpt', 'type'=>$type, 'status'=>$status ) ); }
 $GLOBALS['obe_smoke_items'][10] = array( 'post_type'=>Library_Repository::POST_TYPE, 'post_status'=>'private' );
@@ -32,5 +63,8 @@ obe_full_smoke_assert( $dry->can_run_for_item( obe_item( 10, Library_Type::CONTE
 obe_full_smoke_assert( $write->can_write( obe_item( 10, Library_Type::EDITORIAL_REVISION, Library_Status::APPROVED ) )->is_passed(), 'editorial_revision is writeable after approved and dry-run passed' );
 obe_full_smoke_assert( ( new WordPress_Draft_Writer() )->validate_target( new Write_Target( array( 'post_status'=>'publish', 'title'=>'Safe title', 'content'=>'Safe content' ) ) )->is_failed(), 'Write Draft rejects publish' );
 $graph = new Workflow_Graph(); obe_full_smoke_assert( array() === $graph->validate(), 'Workflow graph has required gates' );
-$direct = shell_exec( 'rg "wp_insert_post" includes -n' ); obe_full_smoke_assert( 1 === substr_count( $direct, 'includes/Writing/WordPress_Draft_Writer.php' ), 'wp_insert_post appears only in controlled writer path' );
+$wp_insert_matches = obe_full_smoke_find_string_in_files( ABSPATH . 'includes', 'wp_insert_post' );
+$unexpected_wp_insert = array_diff( $wp_insert_matches, array( 'includes/Writing/WordPress_Draft_Writer.php' ) );
+obe_full_smoke_assert( empty( $unexpected_wp_insert ), 'No file outside controlled writer path contains wp_insert_post' );
+obe_full_smoke_assert( in_array( 'includes/Writing/WordPress_Draft_Writer.php', $wp_insert_matches, true ), 'Controlled writer path contains wp_insert_post' );
 echo "Full workflow safety smoke checks passed. No external calls were made.\n";

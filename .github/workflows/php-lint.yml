@@ -75,5 +75,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ! rg -n --glob '!docs/**' --glob '!tests/**' --glob '!README.md' --glob '!DESIGN.md' 'Auto publish|Publish now|Write posts now|Run all|Fix everything' .
-          ! rg -n --glob '!docs/**' --glob '!tests/**' 'register_rest_route|WP_CLI|wp_schedule_event|wp_cron|MCP runtime|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}' .
+
+          check_forbidden() {
+            pattern="$1"
+            matches="$(find . -type f \
+              ! -path './.git/*' \
+              ! -path './docs/*' \
+              ! -path './tests/*' \
+              ! -name 'README.md' \
+              ! -name 'DESIGN.md' \
+              -print0 | xargs -0 grep -nE "$pattern" || true)"
+
+            if [ -n "$matches" ]; then
+              echo "$matches"
+              exit 1
+            fi
+          }
+
+          forbidden_ui='Auto publi''sh|Publish n''ow|Write posts n''ow|Run a''ll|Fix every''thing'
+          forbidden_runtime='register_rest''_route|WP''_CLI|wp_schedule''_event|wp''_cron|MCP run''time|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{20,}'
+
+          check_forbidden "$forbidden_ui"
+          check_forbidden "$forbidden_runtime"
