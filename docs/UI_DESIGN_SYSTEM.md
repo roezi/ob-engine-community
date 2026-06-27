@@ -2,6 +2,8 @@
 
 OBE — Optimization-Based Engine — uses WordPress-native admin patterns. The interface should feel like a professional WordPress admin cockpit: clean, card-based, readable, consistent, and safety-focused, not a heavy SaaS dashboard.
 
+`../DESIGN.md` is the machine-readable design token source of truth for coding agents and future admin UI implementation. This document explains the rationale and usage patterns for those tokens.
+
 ## Foundation
 
 ### Page widths
