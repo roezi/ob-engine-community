@@ -115,3 +115,7 @@ jobs:
           if [[ -f tests/manual/addon-registry-smoke.php ]]; then
             php tests/manual/addon-registry-smoke.php
           fi
+
+          if [[ -f tests/manual/auto-post-draft-generator-smoke.php ]]; then
+            php tests/manual/auto-post-draft-generator-smoke.php
+          fi

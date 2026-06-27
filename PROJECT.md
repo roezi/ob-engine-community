@@ -6,10 +6,10 @@
 
 ## Current status
 
-- **Current plugin version:** `0.16.1`
-- **Current stage:** Addon Registry foundation complete
-- **Current mission status:** Auto Post / Import is identified as a bundled Community addon with registry metadata; existing plans remain review-first Library items.
-- **Next runtime target:** `v0.17.0` — Auto Post Draft Generator
+- **Current plugin version:** `0.17.0`
+- **Current stage:** Auto Post Draft Generator complete
+- **Current mission status:** Auto Post / Import can generate review-first content draft candidates from Auto Post Plans into Library as `needs_review`, without writing WordPress posts.
+- **Next runtime target:** `v0.18.0` — Addons UI Hardening
 
 ## MVP target summary
 
