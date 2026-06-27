@@ -71,3 +71,11 @@ jobs:
           if [[ -f tests/manual/openai-responses-client-smoke.php ]]; then
             php tests/manual/openai-responses-client-smoke.php
           fi
+
+          if [[ -f tests/manual/activity-log-smoke.php ]]; then
+            php tests/manual/activity-log-smoke.php
+          fi
+
+          if [[ -f tests/manual/provider-settings-smoke.php ]]; then
+            php tests/manual/provider-settings-smoke.php
+          fi

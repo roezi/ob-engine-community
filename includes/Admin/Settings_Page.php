@@ -59,26 +59,45 @@ final class Settings_Page {
 				</div>
 
 				<div class="ob-engine-card">
-					<h2><?php esc_html_e( 'BYOK provider key', 'ob-engine' ); ?></h2>
-					<p><?php esc_html_e( 'Enter a provider API key to store it for future use. The raw key is never printed back to this page.', 'ob-engine' ); ?></p>
-					<label class="ob-engine-label" for="ob-engine-provider-key"><?php esc_html_e( 'API key', 'ob-engine' ); ?></label>
-					<input id="ob-engine-provider-key" class="regular-text" type="password" name="ob_engine_settings[provider_api_key]" value="" autocomplete="new-password" placeholder="<?php esc_attr_e( 'Leave blank to keep existing key', 'ob-engine' ); ?>" />
-					<?php if ( Provider_Settings::has_api_key( $settings ) ) : ?>
-						<p>
-							<?php esc_html_e( 'Stored key:', 'ob-engine' ); ?>
-							<code><?php echo esc_html( Provider_Settings::masked_api_key( $settings ) ); ?></code>
-						</p>
-						<label>
-							<input type="checkbox" name="ob_engine_settings[clear_provider_api_key]" value="1" />
-							<?php esc_html_e( 'Clear stored API key', 'ob-engine' ); ?>
-						</label>
-					<?php else : ?>
-						<p><?php esc_html_e( 'No provider API key is currently stored.', 'ob-engine' ); ?></p>
-					<?php endif; ?>
-
-					<label class="ob-engine-label" for="ob-engine-custom-provider-base-url"><?php esc_html_e( 'Custom provider base URL placeholder', 'ob-engine' ); ?></label>
-					<input id="ob-engine-custom-provider-base-url" class="regular-text" type="url" name="ob_engine_settings[custom_provider_base_url]" value="<?php echo esc_attr( $settings['custom_provider_base_url'] ); ?>" placeholder="<?php esc_attr_e( 'https://example.com', 'ob-engine' ); ?>" />
+					<h2><?php esc_html_e( 'Provider keys', 'ob-engine' ); ?></h2>
+					<p><?php esc_html_e( 'Stored for future BYOK use. This screen does not validate keys or call external APIs.', 'ob-engine' ); ?></p>
 				</div>
+
+				<?php foreach ( $providers as $provider_id => $label ) : ?>
+					<?php $provider_config = $settings['providers'][ $provider_id ]; ?>
+					<div class="ob-engine-card">
+						<h3><?php echo esc_html( $label ); ?></h3>
+						<p><?php esc_html_e( 'Stored for future BYOK use. This screen does not validate keys or call external APIs.', 'ob-engine' ); ?></p>
+
+						<label>
+							<input type="checkbox" name="ob_engine_settings[providers][<?php echo esc_attr( $provider_id ); ?>][enabled]" value="1" <?php checked( ! empty( $provider_config['enabled'] ) ); ?> />
+							<?php esc_html_e( 'Enabled', 'ob-engine' ); ?>
+						</label>
+
+						<label class="ob-engine-label" for="ob-engine-provider-<?php echo esc_attr( $provider_id ); ?>-model"><?php esc_html_e( 'Default model', 'ob-engine' ); ?></label>
+						<input id="ob-engine-provider-<?php echo esc_attr( $provider_id ); ?>-model" class="regular-text" type="text" name="ob_engine_settings[providers][<?php echo esc_attr( $provider_id ); ?>][default_model]" value="<?php echo esc_attr( $provider_config['default_model'] ); ?>" />
+
+						<label class="ob-engine-label" for="ob-engine-provider-<?php echo esc_attr( $provider_id ); ?>-key"><?php esc_html_e( 'API key', 'ob-engine' ); ?></label>
+						<input id="ob-engine-provider-<?php echo esc_attr( $provider_id ); ?>-key" class="regular-text" type="password" name="ob_engine_settings[providers][<?php echo esc_attr( $provider_id ); ?>][api_key]" value="" autocomplete="new-password" placeholder="<?php esc_attr_e( 'Leave blank to keep existing key', 'ob-engine' ); ?>" />
+						<?php if ( Provider_Settings::has_api_key( $provider_id, $settings ) ) : ?>
+							<p>
+								<?php esc_html_e( 'Stored key:', 'ob-engine' ); ?>
+								<code><?php echo esc_html( Provider_Settings::masked_api_key( $provider_id, $settings ) ); ?></code>
+							</p>
+							<label>
+								<input type="checkbox" name="ob_engine_settings[providers][<?php echo esc_attr( $provider_id ); ?>][clear_api_key]" value="1" />
+								<?php esc_html_e( 'Clear stored key', 'ob-engine' ); ?>
+							</label>
+						<?php else : ?>
+							<p><?php esc_html_e( 'No provider API key is currently stored.', 'ob-engine' ); ?></p>
+						<?php endif; ?>
+
+						<?php if ( Provider_Settings::provider_supports_base_url( $provider_id ) ) : ?>
+							<label class="ob-engine-label" for="ob-engine-provider-<?php echo esc_attr( $provider_id ); ?>-base-url"><?php esc_html_e( 'Base URL', 'ob-engine' ); ?></label>
+							<input id="ob-engine-provider-<?php echo esc_attr( $provider_id ); ?>-base-url" class="regular-text" type="url" name="ob_engine_settings[providers][<?php echo esc_attr( $provider_id ); ?>][base_url]" value="<?php echo esc_attr( $provider_config['base_url'] ); ?>" placeholder="<?php esc_attr_e( 'https://example.com', 'ob-engine' ); ?>" />
+						<?php endif; ?>
+					</div>
+				<?php endforeach; ?>
 
 				<div class="ob-engine-card">
 					<h2><?php esc_html_e( 'Safety flags', 'ob-engine' ); ?></h2>

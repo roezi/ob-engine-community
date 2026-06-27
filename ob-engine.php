@@ -3,7 +3,7 @@
  * Plugin Name: OB Engine Community
  * Plugin URI: https://github.com/roezi/ob-engine-community
  * Description: Safety-first WordPress automation foundation for OB Engine Community.
- * Version: 0.7.0
+ * Version: 0.8.0
  * Author: Optimized Builder
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OB_ENGINE_VERSION', '0.7.0' );
+define( 'OB_ENGINE_VERSION', '0.8.0' );
 define( 'OB_ENGINE_FILE', __FILE__ );
 define( 'OB_ENGINE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'OB_ENGINE_URL', plugin_dir_url( __FILE__ ) );
