@@ -3,7 +3,7 @@
  * Plugin Name: OB Engine Community
  * Plugin URI: https://github.com/roezi/ob-engine-community
  * Description: Safety-first WordPress automation foundation for OB Engine Community.
- * Version: 0.10.0
+ * Version: 0.11.0
  * Author: Optimized Builder
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OB_ENGINE_VERSION', '0.10.0' );
+define( 'OB_ENGINE_VERSION', '0.11.0' );
 define( 'OB_ENGINE_FILE', __FILE__ );
 define( 'OB_ENGINE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'OB_ENGINE_URL', plugin_dir_url( __FILE__ ) );
@@ -42,6 +42,7 @@ require_once OB_ENGINE_PATH . 'includes/Providers/Provider_Settings.php';
 require_once OB_ENGINE_PATH . 'includes/Providers/Provider_Resolver.php';
 require_once OB_ENGINE_PATH . 'includes/AI/AI_Request_Builder.php';
 require_once OB_ENGINE_PATH . 'includes/AI/AI_Engine.php';
+require_once OB_ENGINE_PATH . 'includes/AI/Manual_Generate_Service.php';
 require_once OB_ENGINE_PATH . 'includes/Activity/Activity_Action.php';
 require_once OB_ENGINE_PATH . 'includes/Activity/Activity_Status.php';
 require_once OB_ENGINE_PATH . 'includes/Activity/Activity_Object_Type.php';
@@ -61,6 +62,7 @@ require_once OB_ENGINE_PATH . 'includes/Approval/Approval_Service.php';
 require_once OB_ENGINE_PATH . 'includes/Library/Library_Admin_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Dashboard_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Settings_Page.php';
+require_once OB_ENGINE_PATH . 'includes/Admin/Manual_Generate_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Admin_Menu.php';
 require_once OB_ENGINE_PATH . 'includes/Core/Plugin.php';
 

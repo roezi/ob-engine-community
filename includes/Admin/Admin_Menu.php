@@ -20,6 +20,7 @@ final class Admin_Menu {
 	public const SLUG = 'ob-engine';
 	public const SETTINGS_SLUG = 'ob-engine-settings';
 	public const LIBRARY_SLUG = 'ob-engine-library';
+	public const GENERATE_SLUG = 'ob-engine-generate';
 	public const ACTIVITY_SLUG = 'ob-engine-activity';
 
 	/**
@@ -37,6 +38,7 @@ final class Admin_Menu {
 		$dashboard = new Dashboard_Page();
 		$settings  = new Settings_Page();
 		$library   = new Library_Admin_Page();
+		$generate  = new Manual_Generate_Page();
 		$activity  = new Activity_Admin_Page();
 
 		add_menu_page(
@@ -65,6 +67,16 @@ final class Admin_Menu {
 			Capabilities::MANAGE,
 			self::LIBRARY_SLUG,
 			array( $library, 'render' )
+		);
+
+
+		add_submenu_page(
+			self::SLUG,
+			esc_html__( 'Manual Generate', 'ob-engine' ),
+			esc_html__( 'Generate', 'ob-engine' ),
+			Capabilities::MANAGE,
+			self::GENERATE_SLUG,
+			array( $generate, 'render' )
 		);
 
 		add_submenu_page(
