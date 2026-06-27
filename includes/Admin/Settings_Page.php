@@ -7,16 +7,16 @@
 
 namespace OBEngine\Admin;
 
+use OBEngine\Providers\Provider_Settings;
 use OBEngine\Support\Capabilities;
 use OBEngine\Support\View;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Renders and saves harmless placeholder settings.
+ * Renders and saves safe provider settings.
  */
 final class Settings_Page {
-	private const OPTION_NAME = 'ob_engine_settings';
 	private const NONCE_ACTION = 'ob_engine_save_settings';
 	private const NONCE_NAME = 'ob_engine_settings_nonce';
 
@@ -29,18 +29,19 @@ final class Settings_Page {
 		}
 
 		$saved = $this->maybe_save();
-		$settings = $this->get_settings();
+		$settings = Provider_Settings::get();
+		$providers = Provider_Settings::providers();
 
 		?>
 		<div class="wrap ob-engine-wrap">
 			<?php View::heading( __( 'OB Engine Settings', 'ob-engine' ) ); ?>
 
 			<?php if ( $saved ) : ?>
-				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Placeholder settings saved.', 'ob-engine' ); ?></p></div>
+				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Provider settings saved.', 'ob-engine' ); ?></p></div>
 			<?php endif; ?>
 
 			<div class="notice notice-info">
-				<p><?php esc_html_e( 'Provider credentials are placeholders only. Live API calls and safe masked API key storage are not implemented yet, so API key fields are intentionally not saved.', 'ob-engine' ); ?></p>
+				<p><?php esc_html_e( 'Provider settings are stored for future BYOK use only. No live API calls, provider validation, workflow execution, or external HTTP requests are implemented on this screen.', 'ob-engine' ); ?></p>
 			</div>
 
 			<form method="post" action="">
@@ -48,21 +49,35 @@ final class Settings_Page {
 
 				<div class="ob-engine-card">
 					<h2><?php esc_html_e( 'Provider', 'ob-engine' ); ?></h2>
-					<p><?php esc_html_e( 'Choose a placeholder provider for future BYOK configuration. This does not enable live calls.', 'ob-engine' ); ?></p>
+					<p><?php esc_html_e( 'Choose the provider to use when provider execution is implemented later. This does not enable live calls.', 'ob-engine' ); ?></p>
 					<label for="ob-engine-provider" class="ob-engine-label"><?php esc_html_e( 'Selected provider', 'ob-engine' ); ?></label>
 					<select id="ob-engine-provider" name="ob_engine_settings[selected_provider]">
-						<?php foreach ( $this->providers() as $value => $label ) : ?>
+						<?php foreach ( $providers as $value => $label ) : ?>
 							<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $settings['selected_provider'], $value ); ?>><?php echo esc_html( $label ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
 
 				<div class="ob-engine-card">
-					<h2><?php esc_html_e( 'BYOK placeholders', 'ob-engine' ); ?></h2>
-					<?php foreach ( $this->providers() as $value => $label ) : ?>
-						<label class="ob-engine-label" for="ob-engine-key-<?php echo esc_attr( $value ); ?>"><?php echo esc_html( $label ); ?></label>
-						<input id="ob-engine-key-<?php echo esc_attr( $value ); ?>" class="regular-text" type="password" value="" placeholder="<?php esc_attr_e( 'API key storage not implemented yet', 'ob-engine' ); ?>" autocomplete="off" disabled />
-					<?php endforeach; ?>
+					<h2><?php esc_html_e( 'BYOK provider key', 'ob-engine' ); ?></h2>
+					<p><?php esc_html_e( 'Enter a provider API key to store it for future use. The raw key is never printed back to this page.', 'ob-engine' ); ?></p>
+					<label class="ob-engine-label" for="ob-engine-provider-key"><?php esc_html_e( 'API key', 'ob-engine' ); ?></label>
+					<input id="ob-engine-provider-key" class="regular-text" type="password" name="ob_engine_settings[provider_api_key]" value="" autocomplete="new-password" placeholder="<?php esc_attr_e( 'Leave blank to keep existing key', 'ob-engine' ); ?>" />
+					<?php if ( Provider_Settings::has_api_key( $settings ) ) : ?>
+						<p>
+							<?php esc_html_e( 'Stored key:', 'ob-engine' ); ?>
+							<code><?php echo esc_html( Provider_Settings::masked_api_key( $settings ) ); ?></code>
+						</p>
+						<label>
+							<input type="checkbox" name="ob_engine_settings[clear_provider_api_key]" value="1" />
+							<?php esc_html_e( 'Clear stored API key', 'ob-engine' ); ?>
+						</label>
+					<?php else : ?>
+						<p><?php esc_html_e( 'No provider API key is currently stored.', 'ob-engine' ); ?></p>
+					<?php endif; ?>
+
+					<label class="ob-engine-label" for="ob-engine-custom-provider-base-url"><?php esc_html_e( 'Custom provider base URL placeholder', 'ob-engine' ); ?></label>
+					<input id="ob-engine-custom-provider-base-url" class="regular-text" type="url" name="ob_engine_settings[custom_provider_base_url]" value="<?php echo esc_attr( $settings['custom_provider_base_url'] ); ?>" placeholder="<?php esc_attr_e( 'https://example.com', 'ob-engine' ); ?>" />
 				</div>
 
 				<div class="ob-engine-card">
@@ -78,7 +93,7 @@ final class Settings_Page {
 					</label>
 				</div>
 
-				<?php submit_button( __( 'Save placeholder settings', 'ob-engine' ) ); ?>
+				<?php submit_button( __( 'Save provider settings', 'ob-engine' ) ); ?>
 			</form>
 		</div>
 		<?php
@@ -99,51 +114,8 @@ final class Settings_Page {
 		check_admin_referer( self::NONCE_ACTION, self::NONCE_NAME );
 
 		$input = isset( $_POST['ob_engine_settings'] ) && is_array( $_POST['ob_engine_settings'] ) ? wp_unslash( $_POST['ob_engine_settings'] ) : array();
-		$provider = isset( $input['selected_provider'] ) ? sanitize_key( $input['selected_provider'] ) : 'openai';
-		$providers = array_keys( $this->providers() );
-
-		if ( ! in_array( $provider, $providers, true ) ) {
-			$provider = 'openai';
-		}
-
-		$settings = array(
-			'selected_provider' => $provider,
-			'dry_run_first'     => ! empty( $input['dry_run_first'] ),
-			'draft_first'       => ! empty( $input['draft_first'] ),
-		);
-
-		update_option( self::OPTION_NAME, $settings, false );
+		Provider_Settings::save( $input );
 
 		return true;
-	}
-
-	/**
-	 * Get saved settings with safe defaults.
-	 */
-	private function get_settings(): array {
-		$defaults = array(
-			'selected_provider' => 'openai',
-			'dry_run_first'     => true,
-			'draft_first'       => true,
-		);
-
-		$settings = get_option( self::OPTION_NAME, array() );
-
-		if ( ! is_array( $settings ) ) {
-			$settings = array();
-		}
-
-		return wp_parse_args( $settings, $defaults );
-	}
-
-	/**
-	 * Providers shown as future BYOK placeholders.
-	 */
-	private function providers(): array {
-		return array(
-			'openai' => __( 'OpenAI', 'ob-engine' ),
-			'gemini' => __( 'Gemini', 'ob-engine' ),
-			'custom' => __( 'Custom provider', 'ob-engine' ),
-		);
 	}
 }
