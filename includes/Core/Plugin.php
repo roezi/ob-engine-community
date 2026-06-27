@@ -8,6 +8,7 @@
 namespace OBEngine\Core;
 
 use OBEngine\Admin\Admin_Menu;
+use OBEngine\Library\Library_Repository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -37,6 +38,8 @@ final class Plugin {
 	 * Register WordPress hooks.
 	 */
 	public function register(): void {
+		add_action( 'init', array( new Library_Repository(), 'register_post_type' ) );
+
 		if ( is_admin() ) {
 			( new Admin_Menu() )->register();
 		}

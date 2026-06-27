@@ -7,6 +7,7 @@
 
 namespace OBEngine\Admin;
 
+use OBEngine\Library\Library_Admin_Page;
 use OBEngine\Support\Capabilities;
 
 defined( 'ABSPATH' ) || exit;
@@ -17,6 +18,7 @@ defined( 'ABSPATH' ) || exit;
 final class Admin_Menu {
 	public const SLUG = 'ob-engine';
 	public const SETTINGS_SLUG = 'ob-engine-settings';
+	public const LIBRARY_SLUG = 'ob-engine-library';
 
 	/**
 	 * Register hooks for admin menu and assets.
@@ -32,6 +34,7 @@ final class Admin_Menu {
 	public function add_menu(): void {
 		$dashboard = new Dashboard_Page();
 		$settings  = new Settings_Page();
+		$library   = new Library_Admin_Page();
 
 		add_menu_page(
 			esc_html__( 'OB Engine', 'ob-engine' ),
@@ -50,6 +53,15 @@ final class Admin_Menu {
 			Capabilities::MANAGE,
 			self::SLUG,
 			array( $dashboard, 'render' )
+		);
+
+		add_submenu_page(
+			self::SLUG,
+			esc_html__( 'Library', 'ob-engine' ),
+			esc_html__( 'Library', 'ob-engine' ),
+			Capabilities::MANAGE,
+			self::LIBRARY_SLUG,
+			array( $library, 'render' )
 		);
 
 		add_submenu_page(
