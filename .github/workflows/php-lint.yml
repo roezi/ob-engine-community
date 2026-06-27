@@ -103,3 +103,7 @@ jobs:
           if [[ -f tests/manual/source-intake-preview-smoke.php ]]; then
             php tests/manual/source-intake-preview-smoke.php
           fi
+
+          if [[ -f tests/manual/field-mapping-validation-smoke.php ]]; then
+            php tests/manual/field-mapping-validation-smoke.php
+          fi
