@@ -59,7 +59,9 @@ final class OpenAI_Provider implements Provider_Interface {
 			);
 		}
 
-		if ( empty( $settings['provider_api_key'] ) ) {
+		$api_key = Provider_Settings::get_api_key( 'openai' );
+
+		if ( '' === $api_key ) {
 			return AI_Response::failed( $request, AI_Error::missing_provider_key() );
 		}
 
@@ -92,6 +94,6 @@ final class OpenAI_Provider implements Provider_Interface {
 			);
 		}
 
-		return $this->client->create_response( $request, (string) $settings['provider_api_key'] );
+		return $this->client->create_response( $request, $api_key );
 	}
 }
