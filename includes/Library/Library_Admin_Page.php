@@ -17,6 +17,9 @@ use OBEngine\Safety\Safety_Status;
 use OBEngine\Safety\Write_Target;
 use OBEngine\Support\Capabilities;
 use OBEngine\Support\View;
+use OBEngine\Writing\Write_Draft_Service;
+use OBEngine\Writing\Write_Repository;
+use OBEngine\Writing\Write_Status;
 
 use function add_query_arg;
 
@@ -44,12 +47,20 @@ final class Library_Admin_Page {
 	/** @var Dry_Run_Service */
 	private $dry_run_service;
 
+	/** @var Write_Repository */
+	private $write_repository;
+
+	/** @var Write_Draft_Service */
+	private $write_service;
+
 	public function __construct() {
 		$this->repository = new Library_Repository();
 		$this->approval_repository = new Approval_Repository( $this->repository );
 		$this->approval_service = new Approval_Service( $this->approval_repository, $this->repository );
 		$this->dry_run_repository = new Dry_Run_Repository();
 		$this->dry_run_service = new Dry_Run_Service( $this->repository, $this->approval_repository, $this->dry_run_repository );
+		$this->write_repository = new Write_Repository();
+		$this->write_service = new Write_Draft_Service( $this->repository, $this->approval_repository, $this->dry_run_repository, $this->write_repository );
 	}
 
 	public function render(): void {
@@ -92,11 +103,13 @@ final class Library_Admin_Page {
 			'error'    => __( 'The requested Library action could not be completed.', 'ob-engine' ),
 			'dry_run_passed' => __( 'Dry-run passed. No WordPress content was created or changed.', 'ob-engine' ),
 			'dry_run_failed' => __( 'Dry-run failed. No WordPress content was created or changed.', 'ob-engine' ),
+			'write_draft_created' => __( 'WordPress draft created. It was not published.', 'ob-engine' ),
+			'write_draft_failed' => __( 'Write draft failed. No content was published.', 'ob-engine' ),
 		);
 		if ( ! isset( $messages[ $message ] ) ) {
 			return;
 		}
-		$type = in_array( $message, array( 'error', 'dry_run_failed' ), true ) ? 'notice-error' : 'notice-success';
+		$type = in_array( $message, array( 'error', 'dry_run_failed', 'write_draft_failed' ), true ) ? 'notice-error' : 'notice-success';
 		echo '<div class="notice ' . esc_attr( $type ) . '"><p>' . esc_html( $messages[ $message ] ) . '</p></div>';
 	}
 
@@ -137,6 +150,10 @@ final class Library_Admin_Page {
 			$target_data = isset( $_POST['obe_dry_run_target'] ) && is_array( $_POST['obe_dry_run_target'] ) ? wp_unslash( $_POST['obe_dry_run_target'] ) : array();
 			$result = $this->dry_run_service->run_for_library_item( $id, $target_data );
 			$this->redirect_after_write( $id, is_wp_error( $result ) ? 'error' : ( $result->is_passed() ? 'dry_run_passed' : 'dry_run_failed' ) );
+		} elseif ( 'write_draft' === $action && $id ) {
+			$target_data = isset( $_POST['obe_write_target'] ) && is_array( $_POST['obe_write_target'] ) ? wp_unslash( $_POST['obe_write_target'] ) : array();
+			$result = $this->write_service->write_from_library_item( $id, $target_data );
+			$this->redirect_after_write( $id, is_wp_error( $result ) ? 'error' : ( $result->is_success() ? 'write_draft_created' : 'write_draft_failed' ) );
 		}
 	}
 
@@ -184,6 +201,7 @@ final class Library_Admin_Page {
 		<div class="ob-engine-detail-grid">
 			<?php $this->render_approval_panel( $item ); ?>
 			<?php $this->render_dry_run_panel( $item ); ?>
+			<?php $this->render_write_draft_panel( $item ); ?>
 			<div class="ob-engine-card"><h2><?php esc_html_e( 'Content summary', 'ob-engine' ); ?></h2><p><?php echo esc_html( $item->get_summary() ); ?></p><div><?php echo wp_kses_post( wpautop( $item->get_content() ) ); ?></div></div>
 			<div class="ob-engine-card"><h2><?php esc_html_e( 'Source summary', 'ob-engine' ); ?></h2><p><?php echo esc_html( $item->get_source_label() ); ?></p></div>
 			<div class="ob-engine-card"><h2><?php esc_html_e( 'Redacted payload / summary', 'ob-engine' ); ?></h2><pre><?php echo esc_html( $item->get_payload_redacted() ); ?></pre></div>
@@ -221,6 +239,53 @@ final class Library_Admin_Page {
 						<option value="pending" <?php selected( isset( $target['post_status'] ) ? $target['post_status'] : 'draft', 'pending' ); ?>><?php esc_html_e( 'pending', 'ob-engine' ); ?></option>
 					</select>
 					<p><button class="button button-primary" type="submit"><?php esc_html_e( 'Run dry-run', 'ob-engine' ); ?></button></p>
+				</form>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+
+	private function render_write_draft_panel( Library_Item $item ): void {
+		$record = $this->write_repository->get( $item->get_id() );
+		$approval = $this->approval_repository->get( $item->get_id() );
+		$dry_run = $this->dry_run_repository->get( $item->get_id() );
+		$target = $dry_run->get_target();
+		$post_type = isset( $target['post_type'] ) ? sanitize_key( (string) $target['post_type'] ) : 'post';
+		$post_status = isset( $target['post_status'] ) ? sanitize_key( (string) $target['post_status'] ) : Write_Target::STATUS_DRAFT;
+		$post_link = $record->get_post_id() && function_exists( 'get_edit_post_link' ) ? get_edit_post_link( $record->get_post_id(), '' ) : '';
+		?>
+		<div class="ob-engine-card ob-engine-write-draft-panel">
+			<h2><?php esc_html_e( 'Write Draft', 'ob-engine' ); ?></h2>
+			<p><span class="<?php echo esc_attr( Write_Status::badge_class( $record->get_status() ) ); ?>"><?php echo esc_html( Write_Status::label( $record->get_status() ) ); ?></span></p>
+			<p class="description"><?php esc_html_e( 'Write Draft creates a WordPress draft or pending-review post from this approved Library item after a successful dry-run. It never publishes content.', 'ob-engine' ); ?></p>
+			<?php if ( $record->is_written() ) : ?>
+				<p><?php esc_html_e( 'This Library item has already been written.', 'ob-engine' ); ?></p>
+				<p><strong><?php esc_html_e( 'Created post ID:', 'ob-engine' ); ?></strong> <?php echo esc_html( (string) $record->get_post_id() ); ?> <?php if ( $post_link ) : ?><a href="<?php echo esc_url( $post_link ); ?>"><?php esc_html_e( 'Edit post', 'ob-engine' ); ?></a><?php endif; ?></p>
+			<?php elseif ( ! $approval->is_approved() ) : ?>
+				<p class="notice notice-warning inline"><?php esc_html_e( 'Approval is required before writing a draft.', 'ob-engine' ); ?></p>
+			<?php elseif ( ! $dry_run->is_passed() ) : ?>
+				<p class="notice notice-warning inline"><?php esc_html_e( 'Run a passing dry-run before writing a draft.', 'ob-engine' ); ?></p>
+			<?php elseif ( ! in_array( $item->get_status(), array( Library_Status::APPROVED ), true ) ) : ?>
+				<p><?php esc_html_e( 'Write Draft is available only for approved Library items that have not already been written.', 'ob-engine' ); ?></p>
+			<?php else : ?>
+				<div class="notice notice-info inline">
+					<p><strong><?php esc_html_e( 'Confirm Write Draft', 'ob-engine' ); ?></strong></p>
+					<ul>
+						<li><?php esc_html_e( 'Library item title:', 'ob-engine' ); ?> <?php echo esc_html( $item->get_title() ); ?></li>
+						<li><?php esc_html_e( 'Target post type:', 'ob-engine' ); ?> <?php echo esc_html( $post_type ); ?></li>
+						<li><?php esc_html_e( 'Target post status:', 'ob-engine' ); ?> <?php echo esc_html( $post_status ); ?></li>
+						<li><?php esc_html_e( 'Destination: WordPress draft/pending post.', 'ob-engine' ); ?></li>
+						<li><?php esc_html_e( 'This does not publish content.', 'ob-engine' ); ?></li>
+					</ul>
+				</div>
+				<form method="post" action="" class="ob-engine-write-draft-form">
+					<?php wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME ); ?>
+					<input type="hidden" name="obe_library_action" value="write_draft" />
+					<input type="hidden" name="item_id" value="<?php echo esc_attr( $item->get_id() ); ?>" />
+					<input type="hidden" name="obe_write_target[post_type]" value="<?php echo esc_attr( $post_type ); ?>" />
+					<input type="hidden" name="obe_write_target[post_status]" value="<?php echo esc_attr( $post_status ); ?>" />
+					<p><button class="button button-primary" type="submit"><?php esc_html_e( 'Write draft', 'ob-engine' ); ?></button></p>
 				</form>
 			<?php endif; ?>
 		</div>

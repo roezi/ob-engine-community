@@ -95,3 +95,7 @@ jobs:
           if [[ -f tests/manual/dry-run-write-safety-smoke.php ]]; then
             php tests/manual/dry-run-write-safety-smoke.php
           fi
+
+          if [[ -f tests/manual/write-draft-from-library-smoke.php ]]; then
+            php tests/manual/write-draft-from-library-smoke.php
+          fi

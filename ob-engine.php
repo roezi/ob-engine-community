@@ -3,7 +3,7 @@
  * Plugin Name: OB Engine Community
  * Plugin URI: https://github.com/roezi/ob-engine-community
  * Description: Safety-first WordPress automation foundation for OB Engine Community.
- * Version: 0.12.0
+ * Version: 0.13.0
  * Author: Optimized Builder
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OB_ENGINE_VERSION', '0.12.0' );
+define( 'OB_ENGINE_VERSION', '0.13.0' );
 define( 'OB_ENGINE_FILE', __FILE__ );
 define( 'OB_ENGINE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'OB_ENGINE_URL', plugin_dir_url( __FILE__ ) );
@@ -65,6 +65,12 @@ require_once OB_ENGINE_PATH . 'includes/Safety/Write_Target.php';
 require_once OB_ENGINE_PATH . 'includes/Safety/Dry_Run_Result.php';
 require_once OB_ENGINE_PATH . 'includes/Safety/Dry_Run_Repository.php';
 require_once OB_ENGINE_PATH . 'includes/Safety/Dry_Run_Service.php';
+require_once OB_ENGINE_PATH . 'includes/Writing/Write_Status.php';
+require_once OB_ENGINE_PATH . 'includes/Writing/Write_Result.php';
+require_once OB_ENGINE_PATH . 'includes/Writing/Write_Record.php';
+require_once OB_ENGINE_PATH . 'includes/Writing/Write_Repository.php';
+require_once OB_ENGINE_PATH . 'includes/Writing/WordPress_Draft_Writer.php';
+require_once OB_ENGINE_PATH . 'includes/Writing/Write_Draft_Service.php';
 require_once OB_ENGINE_PATH . 'includes/Library/Library_Admin_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Dashboard_Page.php';
 require_once OB_ENGINE_PATH . 'includes/Admin/Settings_Page.php';
