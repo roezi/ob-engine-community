@@ -1,0 +1,14 @@
+<?php
+/** Future write target value object; does not write to WordPress. @package OBEngine\Safety */
+namespace OBEngine\Safety;
+use OBEngine\Library\Library_Item;
+defined( 'ABSPATH' ) || exit;
+final class Write_Target {
+	public const STATUS_DRAFT = 'draft'; public const STATUS_PENDING = 'pending';
+	private $post_type; private $post_status; private $title; private $content; private $excerpt;
+	public function __construct( array $data ) { $this->post_type = isset( $data['post_type'] ) ? sanitize_key( (string) $data['post_type'] ) : 'post'; $this->post_status = isset( $data['post_status'] ) ? sanitize_key( (string) $data['post_status'] ) : self::STATUS_DRAFT; $this->title = isset( $data['title'] ) ? sanitize_text_field( (string) $data['title'] ) : ''; $this->content = isset( $data['content'] ) ? wp_kses_post( (string) $data['content'] ) : ''; $this->excerpt = isset( $data['excerpt'] ) ? sanitize_textarea_field( (string) $data['excerpt'] ) : ''; }
+	public static function from_library_item( Library_Item $item, array $overrides = array() ): self { return new self( array_merge( array( 'post_type' => 'post', 'post_status' => self::STATUS_DRAFT, 'title' => $item->get_title(), 'content' => $item->get_content(), 'excerpt' => $item->get_summary() ), $overrides ) ); }
+	public function to_array(): array { return array( 'post_type' => $this->post_type, 'post_status' => $this->post_status, 'title' => $this->title, 'content' => $this->content, 'excerpt' => $this->excerpt ); }
+	public function validate(): Safety_Result { $blockers = array(); if ( '' === $this->post_type || sanitize_key( $this->post_type ) !== $this->post_type ) { $blockers[] = __( 'Target post type must be a sanitized key.', 'ob-engine' ); } if ( ! in_array( $this->post_status, array( self::STATUS_DRAFT, self::STATUS_PENDING ), true ) ) { $blockers[] = __( 'Target status must be draft or pending.', 'ob-engine' ); } if ( '' === trim( $this->title ) ) { $blockers[] = __( 'Target title is required.', 'ob-engine' ); } if ( '' === trim( wp_strip_all_tags( $this->content ) ) ) { $blockers[] = __( 'Target content is required.', 'ob-engine' ); } return $blockers ? Safety_Result::failed( __( 'Write target is not ready.', 'ob-engine' ), $blockers, array( 'target_post_type' => $this->post_type, 'target_post_status' => $this->post_status ) ) : Safety_Result::passed( __( 'Write target is ready for dry-run.', 'ob-engine' ), array( 'target_post_type' => $this->post_type, 'target_post_status' => $this->post_status ) ); }
+	public function get_post_type(): string { return $this->post_type; } public function get_post_status(): string { return $this->post_status; } public function get_title(): string { return $this->title; } public function get_content(): string { return $this->content; } public function get_excerpt(): string { return $this->excerpt; }
+}
