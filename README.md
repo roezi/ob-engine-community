@@ -49,6 +49,14 @@ OB Engine is designed around safety gates:
 
 This repository is the community/open-source version of OB Engine. The project is early, active, and under ongoing development.
 
+## Project status
+
+- **Current plugin version:** `0.11.0`
+- **Current stage:** Manual Generate to Library complete
+- **Next runtime target:** `v0.12.0` Dry-run / Write Draft Safety Runtime
+- **Command center:** [PROJECT.md](PROJECT.md)
+- **Detailed status:** [Project Status](docs/PROJECT_STATUS.md)
+
 ## Product blueprint
 
 - [Product brief](docs/PRODUCT_BRIEF.md)
