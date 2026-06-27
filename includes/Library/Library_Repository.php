@@ -157,6 +157,18 @@ final class Library_Repository {
 		return true;
 	}
 
+
+	public function update_status( int $id, string $status ) {
+		if ( self::POST_TYPE !== get_post_type( $id ) ) {
+			return new WP_Error( 'obe_library_invalid_item', __( 'Invalid Library item.', 'ob-engine' ) );
+		}
+		if ( ! Library_Status::is_valid( $status ) ) {
+			return new WP_Error( 'obe_library_invalid_status', __( 'Invalid Library status.', 'ob-engine' ) );
+		}
+		update_post_meta( $id, self::META_STATUS, $status );
+		return true;
+	}
+
 	public function sanitize_item_data( array $data ): array {
 		$type   = isset( $data['type'] ) ? sanitize_key( (string) $data['type'] ) : Library_Type::CONTENT_DRAFT;
 		$status = isset( $data['status'] ) ? sanitize_key( (string) $data['status'] ) : Library_Status::default_status();

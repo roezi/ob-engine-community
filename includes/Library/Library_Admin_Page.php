@@ -8,6 +8,9 @@
 namespace OBEngine\Library;
 
 use OBEngine\Admin\Admin_Menu;
+use OBEngine\Approval\Approval_Repository;
+use OBEngine\Approval\Approval_Service;
+use OBEngine\Approval\Approval_Status;
 use OBEngine\Support\Capabilities;
 use OBEngine\Support\View;
 
@@ -25,8 +28,16 @@ final class Library_Admin_Page {
 	/** @var Library_Repository */
 	private $repository;
 
+	/** @var Approval_Repository */
+	private $approval_repository;
+
+	/** @var Approval_Service */
+	private $approval_service;
+
 	public function __construct() {
 		$this->repository = new Library_Repository();
+		$this->approval_repository = new Approval_Repository( $this->repository );
+		$this->approval_service = new Approval_Service( $this->approval_repository, $this->repository );
 	}
 
 	public function render(): void {
@@ -39,6 +50,7 @@ final class Library_Admin_Page {
 		?>
 		<div class="wrap ob-engine-wrap ob-engine-library-wrap">
 			<?php View::heading( __( 'Library', 'ob-engine' ) ); ?>
+			<?php $this->render_notice(); ?>
 			<div class="notice notice-info"><p><?php esc_html_e( 'Library stores OBE plans, drafts, reviews, and previews before any WordPress write.', 'ob-engine' ); ?></p></div>
 			<?php
 			if ( 'new' === $view ) {
@@ -53,6 +65,25 @@ final class Library_Admin_Page {
 			?>
 		</div>
 		<?php
+	}
+
+
+	private function render_notice(): void {
+		$message = isset( $_GET['message'] ) ? sanitize_key( wp_unslash( $_GET['message'] ) ) : '';
+		if ( '' === $message ) {
+			return;
+		}
+		$messages = array(
+			'approved' => __( 'Library item approved.', 'ob-engine' ),
+			'rejected' => __( 'Library item rejected.', 'ob-engine' ),
+			'revoked'  => __( 'Approval revoked; item requires review again.', 'ob-engine' ),
+			'error'    => __( 'The requested Library action could not be completed.', 'ob-engine' ),
+		);
+		if ( ! isset( $messages[ $message ] ) ) {
+			return;
+		}
+		$type = 'error' === $message ? 'notice-error' : 'notice-success';
+		echo '<div class="notice ' . esc_attr( $type ) . '"><p>' . esc_html( $messages[ $message ] ) . '</p></div>';
 	}
 
 	private function handle_actions(): void {
@@ -76,6 +107,18 @@ final class Library_Admin_Page {
 		} elseif ( 'delete' === $action && $id ) {
 			$result = $this->repository->delete( $id );
 			$this->redirect_after_write( 0, is_wp_error( $result ) ? 'error' : 'deleted' );
+		} elseif ( 'approve' === $action && $id ) {
+			$note = isset( $_POST['obe_approval_note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['obe_approval_note'] ) ) : '';
+			$result = $this->approval_service->approve_library_item( $id, $note );
+			$this->redirect_after_write( $id, is_wp_error( $result ) ? 'error' : 'approved' );
+		} elseif ( 'reject' === $action && $id ) {
+			$note = isset( $_POST['obe_approval_note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['obe_approval_note'] ) ) : '';
+			$result = $this->approval_service->reject_library_item( $id, $note );
+			$this->redirect_after_write( $id, is_wp_error( $result ) ? 'error' : 'rejected' );
+		} elseif ( 'revoke' === $action && $id ) {
+			$note = isset( $_POST['obe_approval_note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['obe_approval_note'] ) ) : '';
+			$result = $this->approval_service->revoke_library_item( $id, $note );
+			$this->redirect_after_write( $id, is_wp_error( $result ) ? 'error' : 'revoked' );
 		}
 	}
 
@@ -121,10 +164,52 @@ final class Library_Admin_Page {
 			<p class="ob-engine-meta"><span class="ob-engine-status-badge"><?php echo esc_html( Library_Type::label( $item->get_type() ) ); ?></span> <span class="<?php echo esc_attr( Library_Status::badge_class( $item->get_status() ) ); ?>"><?php echo esc_html( Library_Status::label( $item->get_status() ) ); ?></span> <?php echo esc_html( $data['updated_at'] ); ?></p>
 		</div>
 		<div class="ob-engine-detail-grid">
+			<?php $this->render_approval_panel( $item ); ?>
 			<div class="ob-engine-card"><h2><?php esc_html_e( 'Content summary', 'ob-engine' ); ?></h2><p><?php echo esc_html( $item->get_summary() ); ?></p><div><?php echo wp_kses_post( wpautop( $item->get_content() ) ); ?></div></div>
 			<div class="ob-engine-card"><h2><?php esc_html_e( 'Source summary', 'ob-engine' ); ?></h2><p><?php echo esc_html( $item->get_source_label() ); ?></p></div>
 			<div class="ob-engine-card"><h2><?php esc_html_e( 'Redacted payload / summary', 'ob-engine' ); ?></h2><pre><?php echo esc_html( $item->get_payload_redacted() ); ?></pre></div>
 		</div>
+		<?php
+	}
+
+
+	private function render_approval_panel( Library_Item $item ): void {
+		$record = $this->approval_repository->get( $item->get_id() );
+		$can_approve = $this->approval_repository->can_approve( $item );
+		$can_reject = $this->approval_repository->can_reject( $item );
+		$is_locked = in_array( $item->get_status(), array( Library_Status::ARCHIVED, Library_Status::WRITTEN, Library_Status::FAILED ), true );
+		?>
+		<div class="ob-engine-card ob-engine-approval-panel">
+			<h2><?php esc_html_e( 'Approval', 'ob-engine' ); ?></h2>
+			<p><span class="<?php echo esc_attr( Approval_Status::badge_class( $record->get_status() ) ); ?>"><?php echo esc_html( Approval_Status::label( $record->get_status() ) ); ?></span></p>
+			<p class="description"><?php esc_html_e( 'Approval is required before any future WordPress write. This panel does not write or publish content.', 'ob-engine' ); ?></p>
+			<?php if ( '' !== $record->get_actor_label() ) : ?><p><strong><?php esc_html_e( 'Actor:', 'ob-engine' ); ?></strong> <?php echo esc_html( $record->get_actor_label() ); ?></p><?php endif; ?>
+			<?php if ( '' !== $record->get_decided_at() ) : ?><p><strong><?php esc_html_e( 'Decided:', 'ob-engine' ); ?></strong> <?php echo esc_html( $record->get_decided_at() ); ?></p><?php endif; ?>
+			<?php if ( '' !== $record->get_note() ) : ?><p><strong><?php esc_html_e( 'Note:', 'ob-engine' ); ?></strong><br /><?php echo nl2br( esc_html( $record->get_note() ) ); ?></p><?php endif; ?>
+			<?php if ( $record->is_approved() ) : ?><p><?php esc_html_e( 'This item is approved for future dry-run/write-draft steps.', 'ob-engine' ); ?></p><?php endif; ?>
+			<?php if ( $record->is_rejected() ) : ?><p><?php esc_html_e( 'This item was rejected and must be revised before future write actions.', 'ob-engine' ); ?></p><?php endif; ?>
+			<?php if ( $is_locked ) : ?><p><?php esc_html_e( 'Approval actions are unavailable for archived, written, or failed Library items.', 'ob-engine' ); ?></p><?php endif; ?>
+			<?php if ( $can_approve ) : ?>
+				<?php $this->approval_form( 'approve', $item->get_id(), __( 'Approval note', 'ob-engine' ), __( 'Approve', 'ob-engine' ), false ); ?>
+			<?php endif; ?>
+			<?php if ( $can_reject ) : ?>
+				<?php $this->approval_form( 'reject', $item->get_id(), __( 'Rejection note', 'ob-engine' ), __( 'Reject', 'ob-engine' ), true ); ?>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	private function approval_form( string $action, int $id, string $note_label, string $button_label, bool $danger ): void {
+		$textarea_id = 'obe-approval-note-' . $action;
+		?>
+		<form method="post" action="" class="ob-engine-approval-form">
+			<?php wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME ); ?>
+			<input type="hidden" name="obe_library_action" value="<?php echo esc_attr( $action ); ?>" />
+			<input type="hidden" name="item_id" value="<?php echo esc_attr( $id ); ?>" />
+			<label class="ob-engine-label" for="<?php echo esc_attr( $textarea_id ); ?>"><?php echo esc_html( $note_label ); ?></label>
+			<textarea class="large-text" rows="3" id="<?php echo esc_attr( $textarea_id ); ?>" name="obe_approval_note"></textarea>
+			<p><button class="button <?php echo $danger ? 'button-secondary' : 'button-primary'; ?>" type="submit"><?php echo esc_html( $button_label ); ?></button></p>
+		</form>
 		<?php
 	}
 
