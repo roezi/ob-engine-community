@@ -1,8 +1,8 @@
 # Responses API Strategy
 
-OpenAI Provider must use the Responses API as the default OpenAI integration. Do not use Chat Completions as the default.
+OpenAI Provider must use the Responses API as the default OpenAI integration. Do not use Chat Completions as the default OpenAI path.
 
-Responses API is the foundation for OpenAI model calls because it supports text/image input, JSON output, custom code/function tools, and built-in tools such as web search and file search. Community Core still starts with tool execution disabled by default.
+Responses API is the foundation for OpenAI model calls because it supports normalized text generation, structured outputs, multimodal input, future tools, metadata, and future background mode. Community Core starts with tool execution disabled by default.
 
 ## Provider boundary
 
@@ -19,36 +19,36 @@ includes/Providers/OpenAI/
 
 Provider Layer translates normalized `AI_Request` values into Responses API payloads and maps Responses API results into normalized `AI_Response` values.
 
-## OBE-modeled Responses API settings
+## Payload mapping
 
-OBE should model these settings:
-
-- `model`
-- `input`
-- `instructions`
-- `reasoning.effort`
-- `text.verbosity`
-- `text.format`
-- `tools`
-- `tool_choice`
-- `store`
-- `metadata`
-- `safety_identifier`
-- `prompt_cache_key`
-- `background`
+| Normalized field | Responses API payload field |
+| --- | --- |
+| `AI_Request.model` | `model` |
+| `AI_Request.input` | `input` |
+| `AI_Request.instructions` | `instructions` |
+| `AI_Request.reasoning_effort` | `reasoning.effort` |
+| `AI_Request.verbosity` | `text.verbosity` |
+| `AI_Request.output_schema` | `text.format` |
+| `AI_Request.tools` | `tools` |
+| `AI_Request.tool_choice` | `tool_choice` |
+| `AI_Request.store` | `store` |
+| `AI_Request.metadata` | `metadata` |
+| `AI_Request.safety_identifier` | `safety_identifier` |
+| `AI_Request.prompt_cache_key` | `prompt_cache_key` |
+| `AI_Request.background` | `background` |
 
 Community defaults:
 
+- `tools`: disabled
+- `tool_choice`: `none` or omitted
 - `store`: `false` or configurable
 - `background`: `false`
-- `tools`: disabled by default
-- `tool_choice`: none unless a task explicitly enables tools
-- `reasoning.effort`: task/profile-driven, usually low or medium
-- `text.verbosity`: task/profile-driven, usually low or medium
+- `reasoning.effort`: task-driven
+- `text.verbosity`: task-driven
 
 ## Tool strategy
 
-Community starts with no tool execution by default.
+Community v0.5 has no tool execution by default. Tools are contract-only.
 
 Future tools are grouped by namespace:
 
@@ -62,14 +62,14 @@ Future tools are grouped by namespace:
 
 Rules:
 
-- read-only tools may run during dry-run
+- read-only tools may run during `dry_run`
 - write tools require dry-run output and explicit approval
 - destructive tools are disabled in Community
 - file search and web search require controlled workflow context and explicit user-facing permission
 
 ## OpenAI-compatible providers
 
-Custom OpenAI-compatible providers may reuse the normalized OBE request/response contract, but must declare supported capabilities. Compatibility must not weaken redaction, approval, dry-run, or logging policy.
+Gemini and custom OpenAI-compatible providers may reuse the normalized OBE request/response contract, but must declare supported capabilities. Compatibility must not weaken redaction, approval, dry-run, or logging policy.
 
 ## Agents SDK position
 

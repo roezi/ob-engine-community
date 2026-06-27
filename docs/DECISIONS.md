@@ -86,6 +86,13 @@ This log records product and architecture decisions for OB Engine Community.
 
 **Reason:** Community Core should stay minimal, public-safe, BYOK-friendly, and dry-run/approval-first before advanced agent orchestration.
 
+
+## 0015 — AI / Responses API contract precedes implementation
+
+**Decision:** OBE defines the AI / Responses API contract before PHP implementation. The contract covers normalized `AI_Request`, `AI_Response`, Provider Interface, model profiles, task types, structured outputs, usage tracking, errors, redaction, Library integration, Activity integration, tool strategy, and Responses API payload mapping.
+
+**Reason:** Codex and human contributors need a stable public blueprint before adding AI Engine code, provider clients, or OpenAI Responses API transport. This keeps Community Core documentation-only until implementation is explicitly requested and preserves the separation between AI Engine, Provider Layer, workflow runtime, Library, Activity, and WordPress writes.
+
 ## Decision: OBE admin UI and addons stay inside one WordPress admin experience
 
 - Status: Accepted

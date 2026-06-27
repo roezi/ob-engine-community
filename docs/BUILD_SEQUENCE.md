@@ -32,11 +32,11 @@ Design WordPress-native page layouts, widths, cards, tables, badges, forms, deta
 
 ### 3. AI / Responses API Contract
 
-Define `AI_Request`, `AI_Response`, model profiles, task types, structured outputs, redaction, usage tracking, and Provider Interface. OpenAI defaults to Responses API.
+Define `AI_Request`, `AI_Response`, model profiles, task types, structured outputs, redaction, usage tracking, Provider Interface, Library integration, Activity integration, and Responses API payload mapping. This is the contract step before implementation and must include no runtime PHP or live API calls. OpenAI defaults to Responses API.
 
 ### 4. AI / Responses API Implementation
 
-Implement the OpenAI provider wrapper after the contract is stable. Do not use Chat Completions as the default OpenAI integration.
+Next implementation mission after the contract PR: `feat: add AI request/response contracts`. Implement the AI request/response classes and then the OpenAI provider wrapper after the contract is stable. Do not use Chat Completions as the default OpenAI integration.
 
 ### 5. Library
 

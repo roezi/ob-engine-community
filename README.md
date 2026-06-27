@@ -56,6 +56,12 @@ This repository is the community/open-source version of OB Engine. The project i
 - [Master Architecture OBE v1.0](docs/MASTER_ARCHITECTURE_OBE_V1.md)
 - [AI Engine Architecture](docs/AI_ENGINE_ARCHITECTURE.md)
 - [Responses API Strategy](docs/RESPONSES_API_STRATEGY.md)
+- [AI / Responses API Contract](docs/AI_RESPONSES_CONTRACT.md)
+- [AI Request / Response Contract](docs/AI_REQUEST_RESPONSE_CONTRACT.md)
+- [Provider Interface Contract](docs/PROVIDER_INTERFACE_CONTRACT.md)
+- [AI Task Types and Model Profiles](docs/AI_TASK_TYPES_AND_MODEL_PROFILES.md)
+- [Structured Output Schemas](docs/STRUCTURED_OUTPUT_SCHEMAS.md)
+- [AI Usage, Error, and Redaction Contract](docs/AI_USAGE_ERROR_AND_REDACTION_CONTRACT.md)
 - [Information Architecture](docs/INFORMATION_ARCHITECTURE.md)
 
 - [Admin UI Blueprint](docs/ADMIN_UI_BLUEPRINT.md) — WordPress-native OBE admin cockpit, menu structure, pages, and safety-first UI flows.
