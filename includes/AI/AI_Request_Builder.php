@@ -31,7 +31,9 @@ final class AI_Request_Builder {
 		$model_defaults = $this->profile_resolver->resolve_model_defaults( $model_profile );
 		$output_schema = $this->profile_resolver->resolve_output_schema( $task_type, isset( $data['output_schema'] ) ? $data['output_schema'] : '' );
 		$metadata = isset( $data['metadata'] ) && is_array( $data['metadata'] ) ? $data['metadata'] : array();
-		$metadata['source'] = 'ai_engine';
+		if ( empty( $metadata['source'] ) ) {
+			$metadata['source'] = 'ai_engine';
+		}
 
 		return AI_Request::from_array(
 			array(
