@@ -1,0 +1,73 @@
+name: PHP Lint
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  php-lint:
+    name: PHP lint and manual smoke tests (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.2']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          tools: none
+
+      - name: Check whitespace
+        run: git diff --check
+
+      - name: Lint PHP files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          files=()
+          for path in ob-engine.php uninstall.php; do
+            if [[ -f "$path" ]]; then
+              files+=("$path")
+            fi
+          done
+
+          while IFS= read -r -d '' file; do
+            files+=("$file")
+          done < <(find includes -type f -name '*.php' -print0 2>/dev/null || true)
+
+          while IFS= read -r -d '' file; do
+            files+=("$file")
+          done < <(find tests/manual -maxdepth 1 -type f -name '*.php' -print0 2>/dev/null || true)
+
+          if (( ${#files[@]} == 0 )); then
+            echo "No PHP files found to lint."
+            exit 0
+          fi
+
+          for file in "${files[@]}"; do
+            php -l "$file"
+          done
+
+      - name: Run manual smoke tests without external APIs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -f tests/manual/ai-contracts-smoke.php ]]; then
+            php tests/manual/ai-contracts-smoke.php
+          fi
+
+          if [[ -f tests/manual/openai-responses-client-smoke.php ]]; then
+            php tests/manual/openai-responses-client-smoke.php
+          fi
