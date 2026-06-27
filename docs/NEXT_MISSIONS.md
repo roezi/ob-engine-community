@@ -4,7 +4,7 @@ This queue is ordered. Each mission should be delivered as one PR with explicit 
 
 ## Current next mission
 
-After `v0.16.0`, the next runtime target is `v0.17.0` — Auto Post Draft Generator. Auto Post Plans are generated into Library only and remain review-first.
+After the `v0.16.1` addon-boundary patch, the next runtime target is `v0.17.0` — Auto Post Draft Generator inside the bundled Auto Post / Import Community addon, not unrestricted OBE Core. Auto Post Plans are generated into Library only and remain review-first.
 
 ## 1. `v0.12.0` — Dry-run / Write Draft Safety Runtime
 
@@ -53,16 +53,16 @@ After `v0.16.0`, the next runtime target is `v0.17.0` — Auto Post Draft Genera
 
 ## 6. `v0.17.0` — Auto Post Draft Generator
 
-- **Goal:** Generate a draft content Library item from an approved Auto Post plan.
+- **Goal:** Generate a draft content Library item from an approved Auto Post plan inside the bundled Auto Post / Import Community addon.
 - **Scope:** Plan-to-draft generation flow, structured draft output, Library save as `needs_review`, approval state handling, and redacted Activity events.
-- **Out of scope:** Direct Write Draft runtime changes, auto-publish, private prompts, bulk generation, external workers, REST/MCP/WP-CLI/cron.
+- **Out of scope:** OBE Core monolith expansion, Direct Write Draft runtime changes, auto-publish, private prompts, private adapters, partner connectors, bulk generation, external workers, REST/MCP/WP-CLI/cron.
 - **Safety requirements:** Approved plan required; generated draft stays in Library; no WordPress write; no raw private payloads in UI/logs.
 - **Expected version bump:** `0.16.0` → `0.17.0`.
 - **Definition of done:** An approved plan can produce a reviewable Library draft without touching public WordPress content.
 
-## 7. `v0.18.0` — Addons UI Foundation
+## 7. `v0.18.0` — Addons UI Hardening
 
-- **Goal:** Add the admin UI foundation for OBE addons as integrated modules.
+- **Goal:** Harden the addon admin UI foundation added in `v0.16.1` and expand safe public addon metadata only where needed.
 - **Scope:** Addons page/cards, module status labels, settings links/placeholders, safety copy, and public addon metadata shape.
 - **Out of scope:** Separate top-level WordPress menus, Bricks/SEO/Performance runtime implementation, license/update channel, private adapters.
 - **Safety requirements:** Addons stay inside OBE; disabled modules cannot run actions; labels must not imply unsafe automation or hidden publishing.
